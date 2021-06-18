@@ -1,0 +1,27 @@
+import { GameObject } from '../JSEngineKit/GameObject.js'
+import { Item } from '../JSInventoryKit/Item.js';
+
+export class Particle extends GameObject {
+    constructor() {
+        super()
+        this.doesCollide = false;
+        this.fixed = false;
+        this.bypassCollisions = true;
+        this.lifetime = 10;
+        this.counter = 0;
+        this.friction = {x:0,y:0}
+        this.colour = 'white'
+        this.layer = 3;
+    }
+    update(input, dt) {
+        super.update(input, dt);
+        this.counter += 0.1;
+        if(this.counter > this.lifetime) {
+            this.remove();
+        }
+    }
+    draw(renderer) {
+        renderer.setLayer(this.layer)
+        renderer.fillCircle(this.position.x, this.position.y, 3,this.colour)
+    }
+}
