@@ -1,4 +1,4 @@
-export * as LibEngine from './JSEngineKit'
+export * as LibEngine from './JSEngineKit/main.js'
 export * as LibInv from './JSInventoryKit/main.js'
 export * as LibParticle from './JSParticleKit/main.js'
 export * as LibTile from './JSTileKit/main.js'
