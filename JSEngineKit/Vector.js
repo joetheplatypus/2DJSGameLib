@@ -48,7 +48,7 @@ export class Vector {
             this.y = param1[1];
         } else if(param1 instanceof Object) {
             this.x = param1.x || 0;
-            this.y = param2.y || 0;
+            this.y = param1.y || 0;
         } else {
             this.x = 0;
             this.y = 0;
