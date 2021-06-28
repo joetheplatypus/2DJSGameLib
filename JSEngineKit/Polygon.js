@@ -1,3 +1,4 @@
+import { Vector } from './Vector.js'
 export class Polygon {
 
     // Collection of points in CLOCKWISE direction.
