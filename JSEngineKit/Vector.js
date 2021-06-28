@@ -40,7 +40,7 @@ export class Vector {
     
     // Initialise vector using {x,y} array or parameters
     constructor(param1, param2) {
-        if(param1 instanceof Number && param2 instanceof Number) {
+        if(typeof param1 === 'number' && typeof param2 === 'number') {
             this.x = param1;
             this.y = param2;
         } else if(param1 instanceof Array) {
