@@ -36,7 +36,7 @@
 //     right: [1,0]
 // }
 
-class Vector {
+export class Vector {
     
     // Initialise vector using {x,y} array or parameters
     constructor(param1, param2) {

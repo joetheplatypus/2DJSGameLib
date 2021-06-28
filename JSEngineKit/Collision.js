@@ -5,7 +5,7 @@
 
 import { ColliderTypes } from './ColliderTypes.js';
 import { clamp } from './main.js';
-import Vector from './Vector.js'
+import { Vector } from './Vector.js'
 
 const penDepthSlop = 0.01;
 const penDepthPercent = 2;
