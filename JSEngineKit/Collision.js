@@ -62,7 +62,7 @@ function collisionDetectionBoxBox(obj1,obj2) {
             }
         }
     }
-    return [[0,0],0]
+    return [Vector.zero,0]
 }
 
 function collisionDetectionCircleCircle(obj1,obj2) {

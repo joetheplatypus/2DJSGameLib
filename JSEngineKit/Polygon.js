@@ -1,7 +1,7 @@
 import { Vector } from './Vector.js'
 export class Polygon {
 
-    // Collection of points in CLOCKWISE direction.
+    // Collection of points {x,y} in CLOCKWISE direction.
     constructor(...nodes) {
         this.nodes = nodes;
         this.repNodes = [...nodes, nodes[0]]

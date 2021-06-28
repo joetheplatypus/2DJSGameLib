@@ -5,29 +5,32 @@ import { InputHandler } from './InputHandler.js';
 import { Polygon } from './Polygon.js';
 import { Vector } from './Vector.js'
 
-/**
- * Base class for all objects within the game.
- */
+// Base class for all objects within the game.
 export class GameObject {
     constructor() {
-        this.id = Math.random();
+
+        // PARAMETERS
         this.mass = 1; // Mass affects collision resolving (not friction)
+        this.friction = {x:0.2,y:0.01};
+        this.dimensions = {x:1,y:1}; //for circular collider uses avg of width and height as radius
+        this.restitution = 0.5; // Something to do with collision response?
+        
+        this.colliderType = ColliderTypes.Box;
+        this.bypassCollisions = false; //True - object does not get collision detection with any other objects
+        this.doesCollide = true; //False - object does not invoke a collision response in the collider
+        this.fixed = false; //True - object not moved to resolve collisions and no gravity applied
+        this.colliderPositionDelta = {x:0,y:0}; // Used to offset collider position from gameobject position
+
+        // LOCAL VARS
+        this.id = Math.random(); // Currently unused in engine, may be usefult for some games
         this.position = {x:0,y:0}
         this.velocity = {x:0,y:0}
         this.acceleration = {x:0,y:0}
         this.drivingForce = {x:0,y:0}
         this.rotation = 0;
         this.angularVelocity = 0;
-        this.friction = {x:0.2,y:0.01};
-        this.dimensions = {x:1,y:1}; //for circular collider use avg of width and height as radius
-        this.restitution = 0.5;
-        this.fixed = false; //True - object not moved to resolve collisions and no gravity applied
-        this.doesCollide = true; //False - object does not invoke a collision response in the collider
-        this.bypassCollisions = false; //True - object does not get collision detection with any other objects
         this.lastCollisionList = [];
         this.collisionList = [];
-        this.colliderPositionDelta = {x:0,y:0};
-        this.colliderType = ColliderTypes.Box;
         this.removeImpulseForceNextTick = null; // Used for applying impulses
         GameObject.list.push(this)
     }
@@ -38,16 +41,8 @@ export class GameObject {
     getAABoundingBox() {
         const pos = this.position;
         const cpd = this.colliderPositionDelta
-        const c = Math.cos(this.rotation);
-        const s = Math.sin(this.rotation);
-        const ltl = { x:-this.dimensions.x/2, y:-this.dimensions.y/2 };
-        const lbr = { x:this.dimensions.x/2, y:this.dimensions.y/2 };
-        const ltr = { x:this.dimensions.x/2, y:-this.dimensions.y/2 };
-        const lbl = { x:-this.dimensions.x/2, y:this.dimensions.y/2 };
-        const gtl = { x:c*ltl.x - s*ltl.y, y:s*ltl.x + c*ltl.y };
-        const gbr = { x:c*lbr.x - s*lbr.y, y:s*lbr.x + c*lbr.y };
-        const gtr = { x:c*ltr.x - s*ltr.y, y:s*ltr.x + c*ltr.y };
-        const gbl = { x:c*lbl.x - s*lbl.y, y:s*lbl.x + c*lbl.y };
+        const p = this.getBoundingBox();
+        const [gtl,gtr,gbr,gbl] = p.nodes;
         const tl = {
             x:Math.min(gbl.x,gbr.x,gtl.x,gtr.x) + pos.x + cpd.x,
             y:Math.min(gbl.y,gbr.y,gtl.y,gtr.y) + pos.y + cpd.y,
@@ -68,10 +63,12 @@ export class GameObject {
         const cpd = this.colliderPositionDelta
         const c = Math.cos(this.rotation);
         const s = Math.sin(this.rotation);
+        // local bounds
         const ltl = { x:-this.dimensions.x/2, y:-this.dimensions.y/2 };
         const lbr = { x:this.dimensions.x/2, y:this.dimensions.y/2 };
         const ltr = { x:this.dimensions.x/2, y:-this.dimensions.y/2 };
         const lbl = { x:-this.dimensions.x/2, y:this.dimensions.y/2 };
+        // convert to global
         const gtl = { x:c*ltl.x - s*ltl.y + pos.x + cpd.x, y:s*ltl.x + c*ltl.y + pos.y + cpd.y };
         const gbr = { x:c*lbr.x - s*lbr.y + pos.x + cpd.x, y:s*lbr.x + c*lbr.y + pos.y + cpd.y };
         const gtr = { x:c*ltr.x - s*ltr.y + pos.x + cpd.x, y:s*ltr.x + c*ltr.y + pos.y + cpd.y };
@@ -397,8 +394,22 @@ GameObject.gravity = 1.2;
 GameObject.list = [];
 
 // Global function to create and initialise GameObjects
-export function spawn(classs,...args) {
-    const o = new classs(...args);
-    o.init();
-    return o;
+// export function spawn(classs,...args) {
+//     const o = new classs(...args);
+//     o.init();
+//     return o;
+// }
+
+export function spawn(arr, _args) {
+    if(arr instanceof Array) {
+        const objs = arr.map(([classs, args]) => {
+            return new classs(...args);
+        })
+        objs.map(o => o.init());
+        return objs;
+    } else {
+        const o = new classs(..._args);
+        o.init();
+        return o;
+    }
 }
