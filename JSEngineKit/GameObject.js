@@ -394,15 +394,15 @@ GameObject.gravity = 1.2;
 GameObject.list = [];
 
 // Global function to create and initialise GameObjects
-export function spawn(arr, _args) {
+export function spawn(classarr, _args) {
     if(arr instanceof Array) {
-        const objs = arr.map(([classs, args]) => {
+        const objs = classarr.map(([classs, args]) => {
             return new classs(...args);
         })
         objs.map(o => o.init());
         return objs;
     } else {
-        const o = new classs(..._args);
+        const o = new classarr(..._args);
         o.init();
         return o;
     }
