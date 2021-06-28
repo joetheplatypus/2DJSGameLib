@@ -53,7 +53,6 @@ export class Vector {
             this.x = 0;
             this.y = 0;
         }
-        console.log(param1,param2,this.x,this.y)
     }
 
     scale(t) {
