@@ -395,3 +395,10 @@ export class GameObject {
 }
 GameObject.gravity = 1.2;
 GameObject.list = [];
+
+// Global function to create and initialise GameObjects
+export function spawn(classs,...args) {
+    const o = new classs(...args);
+    o.init();
+    return o;
+}
