@@ -1,4 +1,3 @@
-import Vector from "../JSEngineKit/Vector.js";
 import { Car } from "./Car.js";
 import { RoadTile } from "./RoadTile.js";
 
@@ -15,7 +14,7 @@ export class AICar extends Car {
         if(this.target) {
             this.input.on = true
 
-            const forward = Math.sign(Vector.dot(this.vForward(), this.vTo(this.target)))
+            const forward = Math.sign(this.vForward().dot(this.vTo(this.target)))
 
             // turn around if long distance
             if(this.distSq(this.target) > 2000 && forward === -1) {

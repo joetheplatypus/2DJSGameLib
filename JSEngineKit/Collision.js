@@ -13,10 +13,12 @@ const penDepthPercent = 2;
 export function collisionHandler(obj1, obj2) {
     const [normal, penDepth] = collisionDetection(obj1, obj2)
     if(penDepth > 0) {
+        // Add to object's collision list for it to handle its own onCollision events next update
         obj1.onCollision(obj2, normal)
         obj1.collisionList.push({collider: obj2, normal: normal})
-        obj2.onCollision(obj1, Vector.scale(normal,-1))
-        obj2.collisionList.push({collider: obj1, normal: Vector.scale(normal,-1)})
+        obj2.onCollision(obj1, normal.scale(-1))
+        obj2.collisionList.push({collider: obj1, normal: normal.scale(-1)})
+        // Run physics collision response if necessary
         if(obj1.doesCollide && obj2.doesCollide) {
             collisionResponse(obj1, obj2, normal, penDepth)
         }
@@ -47,15 +49,15 @@ function collisionDetectionBoxBox(obj1,obj2) {
         if(overlapY > 0) {
             if(overlapX < overlapY) {
                 if(relPos.x < 0) {
-                    return [[-1, 0], overlapX]
+                    return [Vector.left, overlapX]
                 } else {
-                    return [[1,0], overlapX]
+                    return [Vector.right, overlapX]
                 }
             } else {
                 if(relPos.y < 0) {
-                    return [[0,-1], overlapY]
+                    return [Vector.up, overlapY]
                 } else {
-                    return [[0,1], overlapY]
+                    return [Vector.down, overlapY]
                 }
             }
         }
@@ -64,73 +66,71 @@ function collisionDetectionBoxBox(obj1,obj2) {
 }
 
 function collisionDetectionCircleCircle(obj1,obj2) {
-    const relPos = {};
+    const relPos = new Vector();
     relPos.x = obj2.position.x + obj2.colliderPositionDelta.x - obj1.position.x - obj1.colliderPositionDelta.x;
     relPos.y = obj2.position.y + obj2.colliderPositionDelta.y - obj1.position.y - obj1.colliderPositionDelta.y;
     const r1 = (obj1.dimensions.x + obj1.dimensions.y)/4;
     const r2 = (obj2.dimensions.x + obj2.dimensions.y)/4;
     const r = r1+r2;
-    if(Vector.lengthSq([relPos.x,relPos.y]) > Math.pow(r,2)) {
-        return [[0,0],0]
+    if(relPos.distSq() > Math.pow(r,2)) {
+        return [Vector.zero,0]
     }
-    const d = Vector.length([relPos.x,relPos.y]);
+    const d = relPos.dist();
     if(d !== 0) {
-        return [Vector.scale([relPos.x,relPos.y],1/d),r-d];
+        return [relPos.scale(1/d),r-d];
     }
-    return [[1,0],r1];
+    return [Vector.right,r1];
 }
 
 function collisionDetectionBoxCircle(obj1,obj2) {
-    const relPos = [];
-    relPos[0] = obj2.position.x + obj2.colliderPositionDelta.x - obj1.position.x - obj1.colliderPositionDelta.x;
-    relPos[1] = obj2.position.y + obj2.colliderPositionDelta.y - obj1.position.y - obj1.colliderPositionDelta.y;
-    const closest = [];
-    closest[0] = relPos[0];
-    closest[1] = relPos[1];
+    const relPos = new Vector();
+    relPos.x = obj2.position.x + obj2.colliderPositionDelta.x - obj1.position.x - obj1.colliderPositionDelta.x;
+    relPos.y = obj2.position.y + obj2.colliderPositionDelta.y - obj1.position.y - obj1.colliderPositionDelta.y;
+    const closest = new Vector(relPos.x, relPos.y);
     const halfWidth = obj1.dimensions.x/2;
     const halfHeight = obj1.dimensions.y/2;
-    closest[0] = clamp(closest[0], -halfWidth, halfWidth);
-    closest[1] = clamp(closest[1], -halfHeight, halfHeight);
+    closest.x = clamp(closest.x, -halfWidth, halfWidth);
+    closest.y = clamp(closest.y, -halfHeight, halfHeight);
     let circleInside = false;
-    if(Vector.equal(relPos, closest)) {
+    if(relPos.equals(closest)) {
         //circle inside box, clamp circle centre to nearest edge
         circleInside = true;
-        if(Math.abs(relPos[0]) > Math.abs(relPos[1])) {
-            if(closest[0] > 0) {
-                closest[0] = halfWidth;
+        if(Math.abs(relPos.x) > Math.abs(relPos.y)) {
+            if(closest.x > 0) {
+                closest.x = halfWidth;
             } else {
-                closest[0] = -halfWidth;
+                closest.x = -halfWidth;
             }
         } else {
-            if(closest[1] > 0) {
-                closest[1] = halfHeight;
+            if(closest.y > 0) {
+                closest.y = halfHeight;
             } else {
-                closest[1] = -halfHeight;
+                closest.y = -halfHeight;
             }
         }
     }
-    const normal = Vector.minus(relPos,closest);
-    let d = Vector.lengthSq(normal);
+    const normal = relPos.minus(closest);
+    let d = normal.distSq();
     const r = (obj2.dimensions.x + obj2.dimensions.y)/4;
     if(d > Math.pow(r,2) && !circleInside) {
-        return [[0,0],0]
+        return [Vector.zero,0]
     }
     d = Math.sqrt(d);
     if(circleInside) {
         return [normal, r-d];
     } else {
-        return [Vector.scale(normal,-1),r-d];
+        return [normal.scale(-1), r-d];
     }
 }
 
 function collisionDetectionPolyPoly(obj1, obj2) {
     //fix for on top
     if(obj1.position.x === obj2.position.x && obj1.position.y === obj2.position.y) {
-        return [[1,0], 0.1];
+        return [Vector.right, 0.1];
     }
 
     //needed to find sign of normal
-    const relPosSign = {};
+    const relPosSign = new Vector();
     relPosSign.x = Math.sign(obj2.position.x - obj1.position.x) || 1;
     relPosSign.y = Math.sign(obj2.position.y - obj1.position.y) || 1;
     
@@ -150,7 +150,7 @@ function collisionDetectionPolyPoly(obj1, obj2) {
         const projection2 = poly2.project(n);
         const overlap = projectionOverlap(projection1, projection2)
         if(!overlap) {
-            return [[0,0],0]
+            return [Vector.zero,0]
         }
         overlaps.push({
             penDepth: overlap,
@@ -159,8 +159,8 @@ function collisionDetectionPolyPoly(obj1, obj2) {
     }
     const minPenDepth = Math.min(...overlaps.map(i => i.penDepth));
     const min = overlaps.find(i => i.penDepth === minPenDepth);
-    const signedNormal = [relPosSign.x * Math.abs(min.normal.x), relPosSign.y * Math.abs(min.normal.y)]
-    return [signedNormal,min.penDepth]
+    const signedNormal = relPosSign.had(min.normal.abs());
+    return [signedNormal, min.penDepth]
 }
 
 function projectionOverlap([min1,max1], [min2,max2]) {
@@ -199,10 +199,10 @@ export function collisionDetection(obj1, obj2) {
             //Narrow Phase
             return collisionDetectionPolyPoly(obj1,obj2);
         }
-        return [[0,0],0]
+        return [Vector.zero,0]
     } else if(obj1.colliderType === ColliderTypes.Box && obj2.colliderType === ColliderTypes.Circle) {
         const [normal, penDepth] = collisionDetectionBoxCircle(obj1,obj2)
-        return [Vector.scale(normal,-1),penDepth]
+        return [normal.scale(-1), penDepth]
     } else if(obj2.colliderType === ColliderTypes.Box && obj1.colliderType === ColliderTypes.Circle) {
         return collisionDetectionBoxCircle(obj2,obj1);
     } else if(obj2.colliderType === ColliderTypes.Circle && obj1.colliderType === ColliderTypes.Circle) {
@@ -214,16 +214,16 @@ export function collisionDetection(obj1, obj2) {
             //Narrow Phase
             return collisionDetectionPolyPoly(obj1,obj2);
         }
-        return [[0,0],0]
+        return [Vector.zero,0]
     }
 }
 
-export function collisionResponse(obj1, obj2, normal, penDepth) {
-    normal = Vector.normalise(normal)
-    const relVel = [];
-    relVel[0] = obj2.velocity.x - obj1.velocity.x;
-    relVel[1] = obj2.velocity.y - obj1.velocity.y;
-    const relVelNormal = Vector.dot({x:relVel[0],y:relVel[1]}, {x:normal[0],y:normal[1]});
+export function collisionResponse(obj1, obj2, _normal, penDepth) {
+    const normal = _normal.normalise();
+    const relVel = new Vector();
+    relVel.x = obj2.velocity.x - obj1.velocity.x;
+    relVel.y = obj2.velocity.y - obj1.velocity.y;
+    const relVelNormal = relVel.dot(normal);
     if(relVelNormal > 0) {
         return;
     }
@@ -231,14 +231,14 @@ export function collisionResponse(obj1, obj2, normal, penDepth) {
     // impulse scalar
     let j = -(1+e)*relVelNormal;
     j /= (1/obj1.mass) + (1/obj2.mass);
-    let impulse = Vector.scale(normal, j);
+    let impulse = normal.scale(j);
     if(!obj1.fixed) {
-        obj1.velocity.x -= impulse[0]*(1/obj1.mass);
-        obj1.velocity.y -= impulse[1]*(1/obj1.mass);
+        obj1.velocity.x -= impulse.x*(1/obj1.mass);
+        obj1.velocity.y -= impulse.y*(1/obj1.mass);
     }
     if(!obj2.fixed) {
-        obj2.velocity.x += impulse[0]*(1/obj2.mass);
-        obj2.velocity.y += impulse[1]*(1/obj2.mass);
+        obj2.velocity.x += impulse.x*(1/obj2.mass);
+        obj2.velocity.y += impulse.y*(1/obj2.mass);
     }
 
     // if(!obj1.fixed) {
@@ -250,14 +250,14 @@ export function collisionResponse(obj1, obj2, normal, penDepth) {
 
     // positional correction
     const correction = Math.max(penDepth - penDepthSlop, 0) / 2 * penDepthPercent;
-    const correctionVector = Vector.scale(normal, correction);
+    const correctionVector = normal.scale(correction);
     if(!obj1.fixed) {
-        obj1.position.x -= correctionVector[0];
-        obj1.position.y -= correctionVector[1];
+        obj1.position.x -= correctionVector.x;
+        obj1.position.y -= correctionVector.y;
     }
     if(!obj2.fixed) {
-        obj2.position.x += correctionVector[0];
-        obj2.position.y += correctionVector[1];
+        obj2.position.x += correctionVector.x;
+        obj2.position.y += correctionVector.y;
     }
 }
 

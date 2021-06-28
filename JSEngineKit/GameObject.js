@@ -3,6 +3,7 @@ import { ColliderTypes } from './ColliderTypes.js';
 import { collisionHandler, objectPartitions } from './Collision.js'
 import { InputHandler } from './InputHandler.js';
 import { Polygon } from './Polygon.js';
+import { Vector } from './Vector.js'
 
 /**
  * Base class for all objects within the game.
@@ -271,15 +272,15 @@ export class GameObject {
      */
     vTo(obj) {
         if(obj instanceof GameObject) {
-            return {
+            return new Vector({
                 x: obj.position.x - this.position.x,
                 y: obj.position.y - this.position.y,
-            }
+            })
         } else {
-            return {
+            return new Vector({
                 x: obj.x - this.position.x,
                 y: obj.y - this.position.y,
-            }
+            })
         }
     }
 
@@ -287,10 +288,10 @@ export class GameObject {
      * Returns a normalised vector in the direction the object is facing.
      */
     vForward() {
-        return {
+        return new Vector({
             x: Math.cos(this.rotation),
             y: Math.sin(this.rotation)
-        }
+        })
     }
 
     /**
