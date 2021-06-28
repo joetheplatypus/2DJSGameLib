@@ -395,7 +395,7 @@ GameObject.list = [];
 
 // Global function to create and initialise GameObjects
 export function spawn(classarr, _args) {
-    if(arr instanceof Array) {
+    if(classarr instanceof Array) {
         const objs = classarr.map(([classs, args]) => {
             return new classs(...args);
         })
