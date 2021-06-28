@@ -2,12 +2,17 @@
  * Utility class for storing a representation of a polygon in the form of an array of vertices in a CLOCKWISE ordering.
  */
 export class Polygon {
+
     /**
-     * @param  {...Array} vertices Array of the form [[x1,y1],[x2,y2]]
+     * Collection of points {x,y} in CLOCKWISE direction.
+     * @param  {...any} nodes 
      */
     constructor(...nodes) {
         this.nodes = nodes;
         this.repNodes = [...nodes, nodes[0]]
+    }
+    tangents() {
+        
     }
     normals() {
         // get tangents

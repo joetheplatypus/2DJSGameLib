@@ -2,6 +2,7 @@ export * from './GameObject.js'
 export * from './InputHandler.js'
 export * from './Entity.js'
 export * from './ColliderTypes.js'
+export * from './Polygon.js'
 export function spawn(classs,...args) {
     const o = new classs(...args);
     o.init();
