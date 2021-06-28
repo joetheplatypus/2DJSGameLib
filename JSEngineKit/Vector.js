@@ -83,7 +83,7 @@ export class Vector {
         return this.x * v.x + this.y * v.y;
     }
     normalise() {
-        const r = this.dist();
+        const r = this.mod();
         return this.scale(1/r);
     }
     abs() {
