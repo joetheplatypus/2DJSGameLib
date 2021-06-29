@@ -1,4 +1,4 @@
-import EventEmitter from "./EventEmitter.js";
+import EventEmitter from "../JSEngineKit/EventEmitter.js";
 
 export class Inventory {
     constructor() {
@@ -30,10 +30,14 @@ export class Inventory {
             this.onchange.call();
         }
     }
+
+    // Remove by index in itemSlot array
     removeSlot(index) {
         this.itemSlots.splice(index, 1)
         this.onchange.call();
     }
+
+    // Detects whether inventory has the required items.
     has(item, amount) {
         if(amount === undefined) {
             amount = 1;
