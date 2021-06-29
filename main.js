@@ -1,5 +1,5 @@
 export * from './JSEngineKit/main.js'
-export * as LibInv from './JSInventoryKit/main.js'
+export * from './JSInventoryKit/main.js'
 export * as LibParticle from './JSParticleKit/main.js'
 export * from './JSTileKit/main.js'
 export * from './HTMLRenderKit/main.js'
