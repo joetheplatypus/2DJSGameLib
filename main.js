@@ -1,6 +1,6 @@
 export * from './JSEngineKit/main.js'
 export * from './JSInventoryKit/main.js'
-export * as LibParticle from './JSParticleKit/main.js'
+export * from './JSParticleKit/main.js'
 export * from './JSTileKit/main.js'
 export * from './HTMLRenderKit/main.js'
 export * as LibUI from './HTMLUIKIt/main.js'
