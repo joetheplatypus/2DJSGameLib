@@ -1,12 +1,13 @@
 import { GameObject } from '../JSEngineKit/main.js'
 import { Particle } from './Particle.js';
 
+// Emitter of particles every update loop.
 export class ParticleEmitter extends GameObject {
     constructor(x,y,speed,num,lifetime,colour,layer=3) {
         super()
-        this.doesCollide = false;
         this.fixed = true;
         this.bypassCollisions = true;
+        
         this.position.x = x;
         this.position.y = y;
         this.speed = speed;

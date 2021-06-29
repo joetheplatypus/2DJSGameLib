@@ -1,12 +1,13 @@
 import { GameObject } from '../JSEngineKit/GameObject.js'
 import { Particle } from './Particle.js';
 
+// Collection of particles removed upon creation
 export class ParticleSystem extends GameObject {
     constructor(x,y,speed,num,lifetime,colour) {
         super()
-        this.doesCollide = false;
         this.fixed = true;
         this.bypassCollisions = true;
+        
         this.position.x = x;
         this.position.y = y;
         this.speed = speed;

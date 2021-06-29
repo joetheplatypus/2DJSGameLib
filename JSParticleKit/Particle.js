@@ -4,17 +4,18 @@ import { Item } from '../JSInventoryKit/Item.js';
 export class Particle extends GameObject {
     constructor() {
         super()
-        this.doesCollide = false;
         this.fixed = false;
         this.bypassCollisions = true;
-        this.lifetime = 10;
-        this.counter = 0;
         this.friction = {x:0,y:0}
+
+        this.lifetime = 10;
         this.colour = 'white'
         this.layer = 3;
+
+        this.counter = 0;
     }
-    update(input, dt) {
-        super.update(input, dt);
+    update(input) {
+        super.update(input);
         this.counter += 0.1;
         if(this.counter > this.lifetime) {
             this.remove();
