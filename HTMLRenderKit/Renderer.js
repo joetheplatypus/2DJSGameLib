@@ -2,34 +2,24 @@ import { Sprite } from './Sprite.js'
 import { AnimatedSprite } from './AnimatedSprite.js'
 import { Spritesheet } from './Spritesheet.js'
 
+// Helper class to be passed to GameObjects allowing them to draw themselves to the screen. 
+// Uses a layer buffer system to manage allow for multiple draw layers.
 export class Renderer {
+
     constructor(camera, ctx) {
         this.camera = camera;
         this.ctx = ctx;
-        this.layerFuncs = [[],[],[],[],[],[]];
+        this.layerFuncs = [[],[],[],[],[],[]]; // Stores draw functions for each layer
         this.currentLayer = 0;
         this.backgroundImg = null;
     }
+
     setLayer(layer) {
         this.currentLayer = layer;
     }
-    draw(spriteName,_x,_y) {
-        let {x,y} = this.camera.to({x:_x,y:_y});
-        let sprite = Sprite.fromName(spriteName);
-        if(sprite instanceof AnimatedSprite) {
-            sprite.tick()
-            sprite = Sprite.fromName(sprite.getSprite());
-        }
-        if(!this.camera.isInFrame(x, y, sprite.dim.w, sprite.dim.h)) {
-            return;
-        }
-        const sheet = Spritesheet.fromName(sprite.sheet);
-        const topLeft = {x: x-sprite.dim.w/2, y: y-sprite.dim.h/2};
-        this.layerFuncs[this.currentLayer].push(() => {
-            this.ctx.drawImage(sheet.image, sprite.pos.x, sprite.pos.y, sprite.dim.w, sprite.dim.h, Math.floor(topLeft.x), Math.floor(topLeft.y), sprite.dim.w, sprite.dim.h);
-        })
-    }
-    drawAdv(spriteName,_x,_y,scale,rot,flipX = false, crop = {top:0,bottom:0,left:0,right:0}) {
+
+    // Buffer up a function to draw a sprite to the screen, relative to camera position.
+    draw(spriteName, _x, _y, scale = 1, rot = 0, flipX = false, crop = {top:0,bottom:0,left:0,right:0}) {
         let {x,y} = this.camera.to({x:_x,y:_y});
         let sprite = Sprite.fromName(spriteName);
         if(sprite instanceof AnimatedSprite) {
@@ -51,7 +41,9 @@ export class Renderer {
             this.ctx.restore()
         })
     }
-    fillRectRel(_x,_y,rot,_x2,_y2,rot2,_x3,_y3,rot3,w,h,colour) {
+
+    // Niche method allowing specifying position and rotation of rect by method of an articulated arm.  
+    articulatedFillRect(_x, _y, w, h, rot, _x2, _y2, rot2, _x3 = 0,_y3 = 0,rot3 = 0,colour = 'black') {
         let {x,y} = this.camera.to({x:_x,y:_y});
         this.layerFuncs[this.currentLayer].push(() => {
             this.ctx.save();
@@ -67,7 +59,9 @@ export class Renderer {
         });
         this.ctx.restore();
     }
-    fillRect(_x,_y,w,h,colour,rot = 0) {
+
+    // Fill a rectangle with colour and rotation.  Useful for debugging.
+    fillRect(_x, _y, w, h, colour = 'black', rot = 0) {
         let {x,y} = this.camera.to({x:_x,y:_y});
         if(!this.camera.isInFrame(x,y,w,h)) {
             return;
@@ -81,7 +75,9 @@ export class Renderer {
             this.ctx.restore();
         })
     }
-    fillCircle(_x,_y,r,colour) {
+
+    // Useful for debugging.
+    fillCircle(_x, _y, r, colour = 'black') {
         let {x,y} = this.camera.to({x:_x,y:_y});
         if(!this.camera.isInFrame(x,y,r,r)) {
             return;
@@ -93,6 +89,8 @@ export class Renderer {
             this.ctx.fill();
         })
     }
+
+    // Clear the canvas using background image or black.
     clear() {
         if(this.backgroundImg) {
             this.ctx.drawImage(this.backgroundImg, 0, 0, this.camera.w, this.camera.h);
@@ -102,14 +100,19 @@ export class Renderer {
         }
         
     }
+
+    // Call draw functions to render layers to the canvas.  Empties the buffers.
     render() {
         this.layerFuncs = this.layerFuncs.map(layer => {
             layer.map(f => f());
             return [];
         })
     }
+
+
     setBackgroundImg(src) {
         this.backgroundImg = new Image();
         this.backgroundImg.src = src;
     }
+
 }

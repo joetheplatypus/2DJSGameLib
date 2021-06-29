@@ -51,6 +51,9 @@ export class Vector {
     abs() {
         return new Vector(Math.abs(this.x), Math.abs(this.y));
     }
+    angle() {
+        return Math.atan2(this.y, this.x)
+    }
     had(v) {
         return new Vector(this.x * v.x, this.y * v.y);
     }

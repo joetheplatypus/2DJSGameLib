@@ -1,11 +1,13 @@
 import { Sprite } from './Sprite.js'
+
+// Sprite with multiple images for animation.  Handles timer ticks and updates getSprite() to return the current sprite frame.
 export class AnimatedSprite {
-    constructor(name, subsprites, animationSpeed) {
+    constructor(name, animationSpeed, ...subsprites) {
         this.name = name;
         this.subsprites = subsprites;
-        this.animationSpeed = animationSpeed
+        this.animationSpeed = animationSpeed; // higher is faster speed
         this.timer = 0;
-        this.counter = 0; //which sprite to show
+        this.counter = 0; // index of sprite to show
         this.interval = (10/this.animationSpeed)/subsprites.length;
         Sprite.list.push(this)
     }

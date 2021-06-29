@@ -1,5 +1,6 @@
 import { Sprite } from './Sprite.js'
 
+// Utility function to load sprites from a grid based spritesheet using 2D array.  Allows for sheet cropping.
 export function loadSpritesFromGrid(spritesheetName, tileWidth, tileHeight, arrayNames, crop) {
     if(!crop) {
         crop = {
@@ -14,8 +15,12 @@ export function loadSpritesFromGrid(spritesheetName, tileWidth, tileHeight, arra
             if(arrayNames[y][x] === null) {
                 continue;
             }
-            // console.log(arrayNames[y][x])
-            new Sprite(arrayNames[y][x], spritesheetName, x*tileWidth + crop.left, y*tileHeight + crop.top, tileWidth-crop.left-crop.right, tileHeight-crop.top-crop.bottom)
+            new Sprite(arrayNames[y][x], 
+                spritesheetName,
+                x*tileWidth + crop.left,
+                y*tileHeight + crop.top,
+                tileWidth-crop.left-crop.right,
+                tileHeight-crop.top-crop.bottom);
         }
     }
 }

@@ -1,3 +1,4 @@
+// Stores reference to spritesheet image by name.
 export class Spritesheet {
     constructor(name, path) {
         this.name = name;

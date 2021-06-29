@@ -5,7 +5,7 @@ export function mod(n, m) {
 
 // Clamps input x between and including [min,max]
 export function clamp(x, min, max) {
-    if(x < min) return min;
-    if(x > max) return max;
+    if(min !== null && x < min) return min;
+    if(max !== null && x > max) return max;
     return x;
 }

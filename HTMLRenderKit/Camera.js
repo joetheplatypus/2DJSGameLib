@@ -1,10 +1,11 @@
+import { clamp } from '../JSEngineKit/main.js'
 export class Camera {
     constructor(w, h) {
         this.x = 0;
         this.y = 0;
         this.w = w;
         this.h = h;
-        this.clamps = {l:null,r:null,t:null,b:null}
+        this.clamps = {l:null,r:null,t:null,b:null} // world position clamps
         this.target = {x:0,y:0};
     }
     smooth({x,y}) {
@@ -19,28 +20,20 @@ export class Camera {
     setTarget(target) {
         this.target = target;
     }
+    setClamps(l,t,r,b) {
+        this.clamps = {l,t,r,b};
+    }
+    // To be called on update to move camera towards position target.
     move() {
         this.x = this.target.x;
         this.y = this.target.y;
         // clamp
-        if(this.clamps.l !== null && this.x < this.clamps.l) {
-            this.x = this.clamps.l
-        }
-        if(this.clamps.r !== null && this.x > this.clamps.r) {
-            this.x = this.clamps.r
-        }
-        if(this.clamps.t !== null && this.y < this.clamps.t) {
-            this.y = this.clamps.t
-        }
-        if(this.clamps.b !== null && this.y > this.clamps.b) {
-            this.y = this.clamps.b
-        }
-        // round
+        this.x = clamp(this.x, this.clamps.l, this.clamps.r)
+        this.y = clamp(this.y, this.clamps.b, this.clamps.t)
+        // do we need to smooth?
     }
     isInFrame(x,y,w,h) {
         return (x > -w && x < this.w+w && y > -h && y < this.h+h);
     }
-    setClamps(l,t,r,b) {
-        this.clamps = {l,t,r,b};
-    }
+    
 }
