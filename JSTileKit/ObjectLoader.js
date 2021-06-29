@@ -19,6 +19,7 @@ export function loadObjects(map, layerName, classMapping) {
             } else {
                 o = new classs()
             }
+            // For some reason this positioning is correct...
             o.setPosition(x, y - map.tileheight);
         }
     })
