@@ -4,7 +4,7 @@ import { Tile } from './Tile.js';
 export * from './Tile.js'
 export * from './TileLoader.js'
 export * from './TileSheet.js'
-export * from './EntityLoader.js'
+export * from './ObjectLoader.js'
 export * from './Grid.js'
 
 
