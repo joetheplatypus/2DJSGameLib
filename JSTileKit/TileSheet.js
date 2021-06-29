@@ -1,10 +1,11 @@
 import { Tile } from "./Tile.js";
 
+// Stores both a class and sprite for each item in the tilesheet.
 export class TileSheet {
     constructor(name) {
         this.name = name;
-        this.sprites = [[]];
-        this.classes = [[]];
+        this.sprites = [[]]; // Sprite to be passed to Tile on creation
+        this.classes = [[]]; // Custom tile classes
         TileSheet.list.push(this);
     }
     setSprites(sprites) {
@@ -13,7 +14,9 @@ export class TileSheet {
     setClasses(classes) {
         this.classes = classes;
     }
-    generateClassMapping(start) {
+
+    // Generates arrays needed to create Map between ID and class/sprite to generate.  ID starts at var to align with Tiled IDs
+    generateClassMapping(start = 0) {
         const map = [];
         let inc = start
         for(let i = 0; i < this.classes.length; i++) {
@@ -31,7 +34,7 @@ export class TileSheet {
         }
         return map;
     }
-    generateSpriteMapping(start) {
+    generateSpriteMapping(start = 0) {
         const map = [];
         let inc = start
         for(let i = 0; i < this.sprites.length; i++) {
@@ -46,6 +49,8 @@ export class TileSheet {
         }
         return map;
     }
+
+    // Used to search tilemaps from Tiled data
     static fromName(name) {
         return TileSheet.list.find(s => s.name === name);
     }
