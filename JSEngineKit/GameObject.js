@@ -390,7 +390,8 @@ export class GameObject {
         }))
     }
 }
-GameObject.gravity = 1.2;
+// GameObject.gravity = 1.2;
+GameObject.gravity = 0;
 GameObject.list = [];
 
 // Global function to create and initialise GameObjects
