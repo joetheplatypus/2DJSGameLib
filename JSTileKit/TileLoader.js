@@ -31,7 +31,7 @@ export function loadTileMap(map, grid, layerName = 'tiles') {
             }
             const sprite = spriteMap.get(tiles[y][x])
             const classs = classMap.get(tiles[y][x])
-            grid.setTile(y,x,sprite,classs)
+            grid.setTile(x,y,sprite,classs)
             
             // const tx = x*Tile.size;
             // const ty = y*Tile.size;
