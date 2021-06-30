@@ -11,7 +11,7 @@ export class KeyVal {
         this.dom = document.createElement('div')
         for(let i = 0; i < this.keys.length; i++) {
             const row = document.createElement('p');
-            row.innerHTML = `<span class="UIKitKey">${this.keys[i]}:&nbsp;</span><span class="UIKitVal">${this.values[i]}</span>`
+            row.innerHTML = `<span class="UIKitKey">${this.keys[i]}:&nbsp;</span><span class="UIKitVal">${this.vals[i]}</span>`
             this.dom.append(row);
         }
         return this.dom;
@@ -26,7 +26,7 @@ export class KeyVal {
         this.dom.innerHTML = '';
         for(let i = 0; i < this.keys.length; i++) {
             const row = document.createElement('p');
-            row.innerHTML = `<span class="UIKitKey">${this.keys[i]}:&nbsp;</span><span class="UIKitVal">${this.values[i]}</span>`
+            row.innerHTML = `<span class="UIKitKey">${this.keys[i]}:&nbsp;</span><span class="UIKitVal">${this.vals[i]}</span>`
             this.dom.append(row);
         }
     }
