@@ -55,5 +55,6 @@ export class Panel extends UIBase {
         row.className = 'UIKitContentRow'
         row.appendChild(dom)
         this.contentDOM.appendChild(row)
+        return comp;
     }
 }
