@@ -29,6 +29,7 @@ export class Panel extends UIBase {
         close.className = 'close'
         close.innerHTML = '<i class="material-icons icon-med">close</i>'
         close.onclick = () => { this.close(); }
+        div.appendChild(close);
 
         // Components
         this.components = [];
@@ -37,7 +38,6 @@ export class Panel extends UIBase {
         this.componentDOMs.map(c => this.contentDOM.appendChild(c));
         div.appendChild(this.contentDOM);
 
-        div.appendChild(close);
         return div;
     }
     addComponent(classs, ...args) {
