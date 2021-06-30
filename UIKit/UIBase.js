@@ -30,9 +30,9 @@ export class UIBase {
             this.dom.style.top = this.position.y;
             this.dom.style.left = this.position.x;
             if(this.hidden) {
-                this.dom.style.display = 'inline-block'
-            } else {
                 this.dom.style.display = 'none'
+            } else {
+                this.dom.style.display = 'inline-block'
             }
         }
     }
