@@ -32,7 +32,7 @@ export class UIBase {
         }
     }
     static updateAll() {
-        UIBase.map(u => u.update())
+        UIBase.list.map(u => u.update())
     }
 }
 UIBase.list = [];
