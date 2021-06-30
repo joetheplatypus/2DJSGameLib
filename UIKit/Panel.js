@@ -4,9 +4,6 @@ import { getCamera } from './util.js'
 export class Panel extends UIBase {
     constructor() {
         super()
-        this.contentDOM = null;
-        this.components = [];
-        this.componentDOMs = [];
     }
     createDOM() {
         // Container
