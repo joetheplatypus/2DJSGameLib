@@ -34,6 +34,9 @@
 .UIKitText {
     margin: 5px;
 }
+.UIKitInput {
+    width: 80%;
+}
 
 /* HERE */
 .UIKitBtnCtr {
@@ -65,10 +68,7 @@
     height: 55px;
     padding: 0;
 }
-.UIKitInput {
-    width: 100%;
-    /* max-width: 200px; */
-}
+
 .UIKitTable .column {
     text-align: center;
     padding: 5px;
