@@ -23,6 +23,7 @@
 }
 .UIKitContent {
     display: flex;
+    flex-wrap: wrap;
 }
 .UIKitButton {
 
