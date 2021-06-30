@@ -15,6 +15,6 @@ export class Input {
         return t;
     }
     getValue() {
-        return this.dom.value
+        return this.dom.value;
     }
 }
