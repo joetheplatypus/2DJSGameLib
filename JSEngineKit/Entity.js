@@ -1,4 +1,4 @@
-import EventEmitter from './EventEmitter.js';
+import { EventEmitter } from './EventEmitter.js';
 import { GameObject } from './GameObject.js'
 
 export class Entity extends GameObject{
