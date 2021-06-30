@@ -10,7 +10,7 @@ export class Input {
         const t = document.createElement('input');
         t.placeholder = this.text;
         t.className = 'UIKitInput';
-        t.onchange = () => {this.onchange.call()}
+        t.onchange = () => {this.onchange.call(); console.log('a')}
         this.dom = t;
         return t;
     }
