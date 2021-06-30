@@ -1,4 +1,4 @@
-export class Text {
+export class UpdateText {
     constructor(text) {
         this.text = text;
         this.dom = null;
