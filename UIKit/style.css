@@ -36,6 +36,8 @@
 }
 .UIKitInput {
     width: 80%;
+    padding: 10px;
+    margin: 5px;
 }
 
 /* HERE */
