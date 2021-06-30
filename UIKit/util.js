@@ -13,6 +13,7 @@ export function getCamera() {
 
 export function setDOM(_dom) {
     dom = _dom;
+    dom.classList.add('UIBaseContainer')
 }
 
 export function addDOM(el) {

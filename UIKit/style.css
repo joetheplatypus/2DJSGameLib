@@ -1,3 +1,6 @@
+.UIBaseContainer {
+    overflow: hidden;
+}
 .UIKitPanel {
     position: absolute;
     background-color: lightgrey;
