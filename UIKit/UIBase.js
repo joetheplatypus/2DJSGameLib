@@ -20,7 +20,7 @@ export class UIBase {
         const close = document.createElement('div');
         close.className = 'close'
         close.innerHTML = '<i class="material-icons icon-med">close</i>'
-        close.onclick = () => { this.hidden = true }
+        close.onclick = () => { console.log('a'); this.hidden = true }
 
         div.appendChild(close);
         return div;
