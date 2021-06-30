@@ -1,9 +1,10 @@
-import { addDOM, getCamera } from "./util.js";
+import { addDOM, getCamera, removeDOM } from "./util.js";
 export class UIBase {
     constructor() {
         this.position = { x:0, y:0 };
         this.hidden = false;
         this.worldCoords = true; // Set true if position is in world coords rather than screen position
+        this.removeOnClose = false; // Set true if want to delete after closing, ie not a recurring ui
         this.dom = this.createDOM();
         addDOM(this.dom);
         UIBase.list.push(this);
@@ -27,6 +28,17 @@ export class UIBase {
                 }
             }
         }
+    }
+    close() {
+        if(this.removeOnClose) {
+            this.remove()
+        } else {
+            this.hidden = true;
+        }
+    }
+    remove() {
+        UIBase.list.splice(UIBase.list.indexOf(this), 1);
+        removeDOM(this.dom);
     }
     static updateAll() {
         UIBase.list.map(u => u.update())

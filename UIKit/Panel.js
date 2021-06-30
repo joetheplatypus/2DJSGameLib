@@ -6,12 +6,15 @@ export class Panel extends UIBase {
         super()
     }
     createDOM() {
+        // Container
         const div = document.createElement('div');
         div.className = 'UIKitPanel'
         div.style.minWidth = '300px';
         div.style.minHeight = '500px';
         div.style.marginLeft = '-150px';
         div.style.marginTop = '-250px';
+
+        // Positioning
         if(this.worldCoords) {
             const screenPos = getCamera().to(this.position)
             div.style.top = screenPos.y;
@@ -21,11 +24,11 @@ export class Panel extends UIBase {
             div.style.left = this.position.x;
         }
         
-
+        // Close
         const close = document.createElement('div');
         close.className = 'close'
         close.innerHTML = '<i class="material-icons icon-med">close</i>'
-        close.onclick = () => { this.hidden = true }
+        close.onclick = () => { this.close(); }
 
         div.appendChild(close);
         return div;
