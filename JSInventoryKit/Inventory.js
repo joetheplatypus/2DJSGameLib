@@ -1,4 +1,4 @@
-import EventEmitter from "../JSEngineKit/EventEmitter.js";
+import { EventEmitter } from "../JSEngineKit/main.js";
 
 export class Inventory {
     constructor() {
