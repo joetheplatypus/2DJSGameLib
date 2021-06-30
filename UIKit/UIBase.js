@@ -27,7 +27,8 @@ export class UIBase {
     }
     update() {
         if(this.dom) {
-            
+            this.dom.style.top = this.position.y;
+            this.dom.style.left = this.position.x;
         }
     }
     static updateAll() {

@@ -1,3 +1,5 @@
+import { UIBase } from './UIBase.js'
+
 let camera = null;
 let dom = null;
 
@@ -19,4 +21,8 @@ export function addDOM(el) {
 
 export function removeDOM(el) {
     dom.removeChild(el)
+}
+
+export function update() {
+    UIBase.updateAll();
 }
