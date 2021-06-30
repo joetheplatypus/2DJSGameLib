@@ -1,4 +1,4 @@
-export class Text {
+export class KeyVal {
     constructor(keys, vals) {
         this.keys = keys;
         this.vals = vals;
