@@ -4,6 +4,9 @@ import { getCamera } from './util.js'
 export class Panel extends UIBase {
     constructor() {
         super()
+        this.contentDOM = null;
+        this.components = [];
+        this.componentDOMs = [];
     }
     createDOM() {
         // Container
@@ -30,7 +33,19 @@ export class Panel extends UIBase {
         close.innerHTML = '<i class="material-icons icon-med">close</i>'
         close.onclick = () => { this.close(); }
 
+        // Components
+        this.contentDOM = document.createElement('div')
+        this.componentDOMs = this.contentDOM.map(c => c.createDOM());
+        this.componentDOMs.map(c => this.contentDOM.appendChild(c))
+
         div.appendChild(close);
         return div;
+    }
+    addComponent(classs, ...args) {
+        const comp = new classs(...args);
+        this.components.push(comp);
+        const dom = comp.createDOM();
+        this.componentDOMs.push(dom);
+        this.contentDOM.appendChild(dom)
     }
 }
