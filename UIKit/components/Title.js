@@ -4,7 +4,7 @@ export class Title {
     }
     createDOM() {
         const t = document.createElement('h1');
-        t.innerText = text;
+        t.innerText = this.text;
         return t;
     }
 }
