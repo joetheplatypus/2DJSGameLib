@@ -17,7 +17,7 @@ export class UIBase {
             if(this.hidden) {
                 this.dom.style.display = 'none'
             } else {
-                this.dom.style.display = 'inline-block'
+                this.dom.style.display = 'flex'
                 if(this.worldCoords) {
                     const screenPos = getCamera().to(this.position)
                     this.dom.style.top = screenPos.y;
