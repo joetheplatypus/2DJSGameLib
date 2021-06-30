@@ -1,5 +1,4 @@
 import { addDOM } from "./util.js";
-
 export class UIBase {
     constructor() {
         this.position = { x:0, y:0 };
