@@ -34,6 +34,7 @@ export class Panel extends UIBase {
         // Components
         this.components = [];
         this.contentDOM = document.createElement('div')
+        this.contentDOM.className = 'UIKitContent'
         this.componentDOMs = this.components.map(c => c.createDOM());
         this.componentDOMs.map(c => this.contentDOM.appendChild(c));
         div.appendChild(this.contentDOM);

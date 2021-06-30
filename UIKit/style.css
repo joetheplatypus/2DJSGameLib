@@ -13,8 +13,6 @@
     border-radius: 7px;
     max-width: 300px;
     min-width: 100px;
-    display: flex;
-    justify-content: center;
 }
 .UIKitTitle {
     text-align: center;
@@ -22,6 +20,9 @@
     font-size: 20px;
     padding: 10px 30px;
     box-sizing: border-box;
+}
+.UIKitContent {
+    display: flex;
 }
 .UIKitButton {
 
