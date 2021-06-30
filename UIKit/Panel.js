@@ -34,7 +34,8 @@ export class Panel extends UIBase {
         this.components = [];
         this.contentDOM = document.createElement('div')
         this.componentDOMs = this.components.map(c => c.createDOM());
-        this.componentDOMs.map(c => this.contentDOM.appendChild(c))
+        this.componentDOMs.map(c => this.contentDOM.appendChild(c));
+        div.appendChild(this.contentDOM);
 
         div.appendChild(close);
         return div;
