@@ -2,7 +2,7 @@ import { addDOM, getCamera, removeDOM } from "./util.js";
 export class UIBase {
     constructor() {
         this.position = { x:0, y:0 };
-        this.hidden = false;
+        this.hidden = true;
         this.worldCoords = true; // Set true if position is in world coords rather than screen position
         this.removeOnClose = false; // Set true if want to delete after closing, ie not a recurring ui
         this.dom = this.createDOM();
