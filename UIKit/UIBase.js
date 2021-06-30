@@ -29,6 +29,11 @@ export class UIBase {
         if(this.dom) {
             this.dom.style.top = this.position.y;
             this.dom.style.left = this.position.x;
+            if(this.hidden) {
+                this.dom.style.display = 'inline-block'
+            } else {
+                this.dom.style.display = 'none'
+            }
         }
     }
     static updateAll() {
