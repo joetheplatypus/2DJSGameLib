@@ -11,8 +11,6 @@
     background-color: lightgrey;
     border: 2px solid grey;
     border-radius: 7px;
-    max-width: 300px;
-    min-width: 100px;
 }
 .UIKitTitle {
     text-align: center;
