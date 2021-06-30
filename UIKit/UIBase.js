@@ -2,7 +2,7 @@ import { addDOM } from "./util.js";
 export class UIBase {
     constructor() {
         this.position = { x:0, y:0 };
-        this.hidden = true;
+        this.hidden = false;
         this.dom = this.createDOM();
         addDOM(this.dom);
         UIBase.list.push(this);
