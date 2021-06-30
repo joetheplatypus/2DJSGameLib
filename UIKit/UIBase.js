@@ -40,6 +40,12 @@ export class UIBase {
         UIBase.list.splice(UIBase.list.indexOf(this), 1);
         removeDOM(this.dom);
     }
+    show() {
+        this.hidden = false;
+    }
+    hide() {
+        this.hidden = true;
+    }
     static updateAll() {
         UIBase.list.map(u => u.update())
     }
