@@ -15,6 +15,6 @@ export class Buttons {
             t.onclick = () => {this.array[i+1]()}
             d.appendChild(t);
         }       
-        return t;
+        return d;
     }
 }
