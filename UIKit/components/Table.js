@@ -16,10 +16,10 @@ export class Table {
                 cell.innerText = this.array[i][j];
                 row.appendChild(cell);
             }
-            table.appendChild(row)
-            this.dom = table;
-            return this.dom;
+            table.appendChild(row)   
         }
+        this.dom = table;
+        return this.dom;
     }
     update(array) {
         this.array = array;
@@ -33,7 +33,6 @@ export class Table {
                     row.appendChild(cell);
                 }
                 this.dom.appendChild(row)
-                return this.dom;
             }
         }
     }
