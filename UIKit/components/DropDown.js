@@ -17,7 +17,7 @@ export class DropDown {
             p.value = '';
             p.selected = true;
             p.disabled = true;
-            p.hidden = true;
+            p.innerText = this.placeholder;
             t.appendChild(p);
         }
         this.values.map(v => {
