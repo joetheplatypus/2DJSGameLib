@@ -9,10 +9,6 @@ export class Panel extends UIBase {
         // Container
         const div = document.createElement('div');
         div.className = 'UIKitPanel'
-        // div.style.minWidth = '300px';
-        // div.style.minHeight = '500px';
-        div.style.marginLeft = '-150px';
-        div.style.marginTop = '-250px';
 
         // Positioning
         if(this.worldCoords) {
