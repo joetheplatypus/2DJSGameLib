@@ -11,5 +11,6 @@ export class ConfirmPrompt extends Panel {
         this.position.y = window.innerHeight/2;
         this.addComponent(Text, text)
         this.addComponent(Buttons, 'Cancel', () => {this.close()}, 'OK', () => {cb()})
+        this.show()
     }
 }
