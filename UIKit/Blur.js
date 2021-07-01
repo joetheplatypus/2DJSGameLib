@@ -2,8 +2,7 @@ import { addDOM } from "./util.js";
 
 class Blur  {
     constructor() {
-        this.dom = this.createDOM();
-        addDOM(this.dom);
+        this.dom = null;
     }
     createDOM() {
         const a = document.createElement('div');
@@ -12,6 +11,11 @@ class Blur  {
         return a;
     }
     on() {
+        if(!this.dom) {
+            this.dom = this.createDOM();
+            addDOM(this.dom);
+        }
+        
         this.dom.style.display = 'inline'
     }
     off() {
