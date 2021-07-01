@@ -46,7 +46,7 @@
     justify-content: center;
 }
 .UIKitTable {
-    
+    width: 100%;
 }
 .UIKitTableRow {
     display: flex;
@@ -55,7 +55,8 @@
     justify-content: center;
 }
 .UIKitTableCell {
-
+    flex: 1;
+    text-align: center;
 }
 
 /* HERE */
