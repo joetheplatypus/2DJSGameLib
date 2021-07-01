@@ -3,6 +3,7 @@ export class MultiPanel {
         this.currentPanel = null;
         this.panels = {}; // Map
         this.removeOnClose = false;
+        this.position = { x:0, y:0 }
     }
     add(name, panel) {
         if(this.panels[name]) {
@@ -14,6 +15,8 @@ export class MultiPanel {
             }
             panel.removeOnClose = false;
             panel.onclose.add(() => {this.close()})
+            panel.position.x = this.position.x;
+            panel.position.y = this.position.y;
         }
     }
     switch(name) {
@@ -27,6 +30,12 @@ export class MultiPanel {
         } else {
             this.currentPanel.hide();
         }
+    }
+    show() {
+        this.currentPanel.show();
+    }
+    hide() {
+        this.currentPanel.hide();
     }
 
 }
