@@ -29,6 +29,9 @@ export class UIBase {
                     this.dom.style.left = this.position.x;
                 }
             }
+            this.dom.style.marginLeft = `-${this.dom.offsetWidth/2}px`
+            this.dom.style.marginTop = `-${this.dom.offsetHeight/2}px`
+
         }
     }
     close() {
