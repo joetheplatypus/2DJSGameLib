@@ -10,6 +10,7 @@ export class ConfirmPrompt extends Panel {
         this.removeOnClose = true;
         this.position.x = window.innerWidth/2;
         this.position.y = window.innerHeight/2;
+        this.dom.classList.add('UIKitPrompt');
         this.addComponent(Text, text)
         this.addComponent(Buttons, 'Cancel', () => {this.close()}, 'OK', () => {cb()})
         Blur.on();

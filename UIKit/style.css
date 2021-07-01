@@ -11,6 +11,7 @@
     background-color: lightgrey;
     border: 2px solid grey;
     border-radius: 7px;
+    z-index: 5;
 }
 .UIKitTitle {
     margin: 10px 0px;
@@ -80,6 +81,10 @@
     height: 100%;
     background-color: black;
     opacity: 0.5;
+    z-index: 10;
+}
+.UIKitPrompt {
+    z-index: 20;
 }
 
 /* HERE */
