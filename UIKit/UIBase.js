@@ -1,10 +1,12 @@
 import { addDOM, getCamera, removeDOM } from "./util.js";
+import { EventEmitter } from '../JSEngineKit/main.js'
 export class UIBase {
     constructor() {
         this.position = { x:0, y:0 };
         this.hidden = true;
         this.worldCoords = true; // Set true if position is in world coords rather than screen position
         this.removeOnClose = false; // Set true if want to delete after closing, ie not a recurring ui
+        this.onclose = new EventEmitter();
         this.dom = this.createDOM();
         addDOM(this.dom);
         UIBase.list.push(this);
@@ -30,6 +32,7 @@ export class UIBase {
         }
     }
     close() {
+        this.onclose.call();
         if(this.removeOnClose) {
             this.remove()
         } else {
