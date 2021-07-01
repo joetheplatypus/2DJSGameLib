@@ -33,6 +33,7 @@
 }
 .UIKitText {
     margin: 5px 30px;
+    max-width: 300px;
 }
 .UIKitInput {
     width: 80%;
@@ -70,6 +71,15 @@
 }
 .UIKitTableHeader .UIKitTableCell {
     border: 1px solid darkgrey;
+}
+.UIKitBlur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
 }
 
 /* HERE */
