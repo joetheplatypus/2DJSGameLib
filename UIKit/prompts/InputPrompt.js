@@ -18,7 +18,7 @@ export class InputPrompt extends Panel {
         const inputDoms = [];
         for(let i = 0; i < inputs.length; i++) {
             // Handle Drop downs
-            if(values[i] instanceof Array) {
+            if(inputs[i] instanceof Array) {
                 inputDoms.push(this.addComponent(DropDown, inputs[i], values[i]))
             } else {
                 inputDoms.push(this.addComponent(Input, inputs[i], values[i]))
