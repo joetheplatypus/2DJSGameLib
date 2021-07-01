@@ -48,6 +48,13 @@
 .UIKitTable {
     width: 100%;
 }
+.UIKitTableHeader {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: center;
+    font-weight: bold;
+}
 .UIKitTableRow {
     display: flex;
     flex-wrap: nowrap;
@@ -59,6 +66,9 @@
     text-align: center;
     padding: 5px;
     border: 1px dashed darkgrey;
+}
+.UIKitTableHeader .UIKitTableCell {
+    border: 1px solid darkgrey;
 }
 
 /* HERE */
