@@ -1,8 +1,9 @@
 import { EventEmitter } from '../../JSEngineKit/main.js'
 
 export class DropDown {
-    constructor(values, placeholder = null) {
+    constructor([placeholder, ...values], value) {
         this.values = values;
+        this.value = value;
         this.placeholder = placeholder;
         this.onchange = new EventEmitter();
         this.dom = null;
@@ -22,6 +23,9 @@ export class DropDown {
         this.values.map(v => {
             const a = document.createElement('option')
             a.innerText = v;
+            if(v === this.value) {
+                a.selected = true;
+            }
             t.appendChild(a);
         })
         this.dom = t;
