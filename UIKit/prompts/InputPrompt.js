@@ -1,5 +1,6 @@
 import Blur from "../Blur.js";
 import { Buttons } from "../components/Buttons.js";
+import { DropDown } from "../components/DropDown.js";
 import { Input } from "../components/Input.js";
 import { Text } from "../components/Text.js";
 import { Title } from "../components/Title.js";
@@ -16,7 +17,12 @@ export class InputPrompt extends Panel {
         this.addComponent(Title, title)
         const inputDoms = [];
         for(let i = 0; i < inputs.length; i++) {
-            inputDoms.push(this.addComponent(Input, inputs[i], values[i]))
+            // Handle Drop downs
+            if(values[i] instanceof Array) {
+                inputDoms.push(this.addComponent(DropDown, values[i], inputs[i]))
+            } else {
+                inputDoms.push(this.addComponent(Input, inputs[i], values[i]))
+            }            
         }        
         this.addComponent(Buttons, 'Cancel', () => {this.close()}, 'OK', () => {
             this.close();
