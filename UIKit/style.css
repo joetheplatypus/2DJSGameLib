@@ -54,6 +54,7 @@
     width: 100%;
     justify-content: center;
     font-weight: bold;
+    font-style: italic;
 }
 .UIKitTableRow {
     display: flex;
