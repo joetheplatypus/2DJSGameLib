@@ -4,6 +4,7 @@ export class Table {
         this.dom = null;
     }
     createDOM() {
+        console.log(this.array)
         const table = document.createElement('div');
         table.className = 'UIKitTable'
         for(let i = 0; i < this.array.length; i++) {
