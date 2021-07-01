@@ -45,6 +45,18 @@
     width: 100%;
     justify-content: center;
 }
+.UIKitTable {
+    
+}
+.UIKitTableRow {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: center;
+}
+.UIKitTableCell {
+
+}
 
 /* HERE */
 .UIKitBtnCtr {
