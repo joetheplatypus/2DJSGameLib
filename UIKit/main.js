@@ -1,6 +1,7 @@
 export * from './util.js'
 export * from './UIBase.js'
 export * from './Panel.js'
+export * from './MultiPanel.js'
 export * from './components/Title.js'
 export * from './components/Button.js'
 export * from './components/Buttons.js'
