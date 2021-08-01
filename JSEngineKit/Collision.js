@@ -277,7 +277,7 @@ function genManifoldCircleCircle(obj1, obj2) {
     if(relPos.modSq() > Math.pow(r,2)) {
         return null
     }
-    const d = relPos.dist();
+    const d = relPos.mod();
     if(d !== 0) {
         return new Collision.Manifold(obj1, obj2, r-d, relPos.scale(1/d))
     }
