@@ -70,10 +70,10 @@ export class Expanding2DArray {
         this.arr[j][i] = val
     }
     get(i,j) {
-        if(this.arr.length <= i) {
+        if(this.arr.length <= j) {
             return this.defaultValue
         }
-        if(this.arr[0].length <= j) {
+        if(this.arr[0].length <= i) {
             return this.defaultValue
         }
         return this.arr[j][i]
