@@ -64,6 +64,9 @@ export class Vector {
     had(v) {
         return new Vector(this.x * v.x, this.y * v.y);
     }
+    copy() {
+        return new Vector(this)
+    }
     static removeScalarMultiples(list) {
         const newList = []
         for(let i=0; i<list.length; i++) {

@@ -23,10 +23,10 @@ export class GameObject {
 
         // LOCAL VARS
         this.id = Math.random();
-        this.position = Vector.zero
-        this.velocity = Vector.zero
-        this.acceleration = Vector.zero
-        this.drivingForce = Vector.zero
+        this.position = Vector.zero.copy()
+        this.velocity = Vector.zero.copy()
+        this.acceleration = Vector.zero.copy()
+        this.drivingForce = Vector.zero.copy()
         this.rotation = 0;
         this.angularVelocity = 0;
         this.lastCollisionList = [];
