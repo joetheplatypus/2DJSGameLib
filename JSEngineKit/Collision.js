@@ -9,7 +9,7 @@ import { Polygon } from './Polygon.js';
 import { avg, overlap } from './util.js';
 import { Vector } from './Vector.js'
 
-export default Collision;
+
 
 const penDepthSlop = 0.01;
 const penDepthPercent = 2;
@@ -149,6 +149,7 @@ const Collision =  {
         
     }
 }
+export default Collision;
 
 function genManifoldAABoxAABox(obj1, obj2) {
     const box1 = obj1.getAABoundingBox()
