@@ -279,9 +279,9 @@ function genManifoldCircleBox(obj1, obj2) {
     }
     d = Math.sqrt(d);
     if(circleInside) {
-        return new Collision.Manifold(obj1, obj2, r-d, normal.scale(-1))
-    } else {
         return new Collision.Manifold(obj1, obj2, r-d, normal)
+    } else {
+        return new Collision.Manifold(obj1, obj2, r-d, normal.scale(-1))
     }
     
 
