@@ -103,7 +103,6 @@ const Collision =  {
             }
             
         })
-        console.log(ret.filter(x => x !== null))
         return ret.filter(x => x !== null)
     },
 
