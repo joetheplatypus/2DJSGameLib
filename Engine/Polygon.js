@@ -69,7 +69,7 @@ export class Polygon {
             const inv_d = (1/det) * a;
             const k = inv_a*x + inv_b*y;
             const r = inv_c*x + inv_d*y;
-            if(k <= 1 && k >= 0) {
+            if(k <= 1 && k >= 0 && r >= 0) {
                 // We have a winner
                 return this.center().add(intersectLine.scale(r))
             }
