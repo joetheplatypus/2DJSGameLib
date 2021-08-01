@@ -10,7 +10,6 @@ export class Polygon {
 
     // Gets list of normalised tangents as vectors
     tangents() {
-        // get tangents
         let tangents = [];
         for(let i = 0; i < this.nodes.length; i++) {
             tangents.push(new Vector({
@@ -18,17 +17,12 @@ export class Polygon {
                 y: this.repNodes[i+1].y - this.repNodes[i].y,
             }))
         }
-        // normalise
         return tangents.map((v) => v.normalise());
     }
 
     // Gets list of normalised normals as vectors
     normals() {
-        // rotate tangents A/C to get normals
-        return this.tangents().map((v) => {
-            return v.rotate(Math.PI/2)
-            return new Vector({ x: v.y, y: -v.x });
-        })
+        return this.tangents().map(v => v.rotate(Math.PI/2))
     }
 
     // Project the polygon along an axis line defined by {x,y}.  Used in SAT.
