@@ -10,8 +10,8 @@ export class Polygon {
     }
 
     center() {
-        const x = util.avg(this.nodes.map(n => n.x))
-        const y = util.avg(this.nodes.map(n => n.y))
+        const x = util.avg(...this.nodes.map(n => n.x))
+        const y = util.avg(...this.nodes.map(n => n.y))
         return new Vector(x,y)
     }
 
