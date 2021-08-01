@@ -16,7 +16,10 @@ export class Vector {
             this.y = 0;
         }
     }
-
+    set(x,y) {
+        this.x = x;
+        this.y = y;
+    }
     scale(t) {
         return new Vector(this.x * t, this.y * t);
     } 
@@ -45,8 +48,12 @@ export class Vector {
         return this.x * v.x + this.y * v.y;
     }
     normalise() {
-        const r = this.mod();
-        return this.scale(1/r);
+        if(this.modSq() !== 1) {
+            const r = this.mod();
+            return this.scale(1/r);
+        } else {
+            return new Vector(this)
+        }
     }
     abs() {
         return new Vector(Math.abs(this.x), Math.abs(this.y));
@@ -56,6 +63,23 @@ export class Vector {
     }
     had(v) {
         return new Vector(this.x * v.x, this.y * v.y);
+    }
+    static removeScalarMultiples(list) {
+        const newList = []
+        for(let i=0; i<list.length; i++) {
+            let toAdd = true
+            for(let j=i+1; j<list.length; j++) {
+                const k1 = list[i].x / list[j].x
+                const k2 = list[i].y / list[j].y
+                if(k1 === k2) {
+                    toAdd = false
+                }
+            }
+            if(toAdd) {
+                newList.push(list[i])
+            }
+        }
+        return newList
     }
 
 }

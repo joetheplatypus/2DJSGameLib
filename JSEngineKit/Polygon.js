@@ -42,4 +42,12 @@ export class Polygon {
         return [min,max]
     }
 
+    static fromAABox(box) {
+        const tl = box.tl
+        const tr = {x:box.br.x, y:box.tl.y}
+        const bl = {x:box.tl.x, y:box.br.y}
+        const br = box.br
+        return new Polygon(tl, tr, br, bl)
+    }
+
 }

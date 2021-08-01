@@ -38,3 +38,14 @@ export function to2d(arr, width, fill = null) {
     }
     return res;
 }
+
+export function avg(...x) {
+    return x.reduce((a,b) => a+b, 0)/x.length
+}
+
+export function overlap([m1, M1], [m2, M2]) {
+    if(m1 > M2 || m2 > M1) {
+        return 0
+    }
+    return Math.min(M1,M2) - Math.max(m1,m2)
+}

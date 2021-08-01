@@ -1,7 +1,7 @@
-import { Box } from './Box.js';
+import { AABox } from './AABox.js';
 import { ColliderTypes } from './ColliderTypes.js';
-import { collisionHandler, objectPartitions } from './Collision.js'
-import { InputHandler } from './InputHandler.js';
+import Collision from './Collision.js'
+import { Expanding2DArray } from './Expanding2DArray.js';
 import { Polygon } from './Polygon.js';
 import { Vector } from './Vector.js'
 
@@ -19,14 +19,14 @@ export class GameObject {
         this.bypassCollisions = false; //True - object does not get collision detection with any other objects
         this.doesCollide = true; //False - object does not invoke a collision response in the collider
         this.fixed = false; //True - object not moved to resolve collisions and no gravity applied
-        this.colliderPositionDelta = {x:0,y:0}; // Used to offset collider position from gameobject position
+        this.colliderPositionDelta = Vector.zero; // Used to offset collider position from gameobject position
 
         // LOCAL VARS
-        this.id = Math.random(); // Currently unused in engine, may be usefult for some games
-        this.position = {x:0,y:0}
-        this.velocity = {x:0,y:0}
-        this.acceleration = {x:0,y:0}
-        this.drivingForce = {x:0,y:0}
+        this.id = Math.random();
+        this.position = Vector.zero
+        this.velocity = Vector.zero
+        this.acceleration = Vector.zero
+        this.drivingForce = Vector.zero
         this.rotation = 0;
         this.angularVelocity = 0;
         this.lastCollisionList = [];
@@ -35,9 +35,7 @@ export class GameObject {
         GameObject.list.push(this)
     }
 
-    /**
-     * Returns the axis-aligned bounding box that the object is contained within.
-     */
+    // Returns the axis-aligned bounding box that the object is contained within.
     getAABoundingBox() {
         const pos = this.position;
         const cpd = this.colliderPositionDelta
@@ -51,13 +49,10 @@ export class GameObject {
             x:Math.max(gbl.x,gbr.x,gtl.x,gtr.x) + pos.x + cpd.x,
             y:Math.max(gbl.y,gbr.y,gtl.y,gtr.y) + pos.y + cpd.y,
         }
-        return new Box(tl,br)
+        return new AABox(tl,br)
     }
 
-    /**
-     * Returns the rotated box vertices defined by this GameObject's dimensions and rotation.
-     * @return {Polygon}
-     */
+    // Returns the rotated bounding box of the object as a Polygon object
     getBoundingBox() {
         const pos = this.position;
         const cpd = this.colliderPositionDelta
@@ -76,39 +71,31 @@ export class GameObject {
         return new Polygon(gtl, gtr, gbr, gbl);
     }
 
-    /**
-     * Initialisation method intented to be called after instantiation.  For example, if many GameObject's are instantiated for world creation,
-     * then this method can be called afterwards to interact with other objects.
-     */
+    // Intented to be called after instantiation by spawn() and used to interact with other objects upon creation.
     init() { 
         
     }
 
-    /**
-     * Update is intended called on all objects at a fixed time interval.  Input is passed as a parameter.
-     * Sub-methods for updating physics and collisions are called here.
-     * @param {InputHandler} input 
-     */
+    // Intended to be called at fixed time interval.
     update(input) {
         this.updatePhysics();
         this.updateCollisions();
     }
 
-    /**
-     * Updates dynamics of the GameObject (acceleration, velocity, position, angular velocity, rotation).  
-     * If the fixed attribute is not set then we add gravity to the acceleration.  Use drivingForce to move an object
-     * or the impulse method for an instantaneous force.
-     */
+    // Updates kinematics, gravity etc.  Use impulse() or set this.drivingForce to apply forces to an object.
     updatePhysics() {
+        // Apply gravity
         if(!this.fixed) {
             this.drivingForce.y += GameObject.gravity;
         }
+
+        // Kinematics
         this.acceleration.x = this.drivingForce.x - this.velocity.x*this.friction.x;
         this.acceleration.y = this.drivingForce.y - this.velocity.y*this.friction.y;
         this.velocity.x += this.acceleration.x;
         this.velocity.y += this.acceleration.y;
 
-        //smoothing
+        // Smoothing
         if(this.velocity.x < 0.1 && this.velocity.x > -0.1) {
             this.velocity.x = 0;
         }
@@ -121,6 +108,7 @@ export class GameObject {
         this.rotation += this.angularVelocity;
 
         if(!this.fixed) {
+            // Object does not need to be aware of gravity so apply and remove every update
             this.drivingForce.y -= GameObject.gravity
         }
 
@@ -129,15 +117,10 @@ export class GameObject {
             this.drivingForce.y -= this.removeImpulseForceNextTick[1];
             this.removeImpulseForceNextTick = null;
         }
-        
     }
 
-    /**
-     * Utility method that calculates the new and existing collision based on the previous frames collision list which is stored as an atribute.
-     * Calls the onCollisionEnter and onCollisionExit as necessary.
-     */
+    // Handles updating new and old collision lists to trigger onCollisionEnter and onCollisionExit
     updateCollisions() {
-        // Collision start/stop events
         const lastColliders = this.lastCollisionList.map(col => col.collider);
         const colliders = this.collisionList.map(l => l.collider);
         const newCollisions = this.collisionList.filter(i => !lastColliders.includes(i.collider));
@@ -148,125 +131,82 @@ export class GameObject {
         this.collisionList = [];
     }
 
-    /**
-     * Applies an instantaenous force to the GameObject. (i.e. the acceleration is set for one frame only)
-     * @param {number} x 
-     * @param {number} y 
-     */
+    // Applies an instantaenous force to the GameObject. (i.e. the acceleration is set for one frame only)
     impulse(x,y) {
         this.drivingForce.x += x;
         this.drivingForce.y += y;
         this.removeImpulseForceNextTick = [x,y];
     }
 
-    /**
-     * Draw method intended to be used for the GameObject to draw itself using the renderer object passed as a parameter.
-     * @param {Renderer} renderer 
-     */
+    // Intended to be used for the GameObject to draw itself using the renderer object passed as a parameter.
     draw(renderer) {
 
     }
     
-    /**
-     * Called when the GameObject is clicked on.
-     */
+    // Intended to be called when this object is clicked on.
     onClick() {
 
     }
 
-    /**
-     * Called for every collider every frame that it is colliding with the GameObject.  
-     * @param {GameObject} collider 
-     * @param {Array} normal 
-     */
+    // Called every update that the object is in collision with this object
     onCollision(collider, normal) { 
 
     }
 
-    /**
-     * Called every time the GameObject collides with an object that it wasnt colliding with in the previous frame.
-     * @param {GameObject} collider 
-     * @param {Array} normal 
-     */
+    // Called every time the GameObject collides with an object that it wasnt colliding with in the previous update.
     onCollisionEnter(collider, normal) {
 
     }
 
-    /**
-     * Called every time the GameObject no longer collides with an object that it was colliding with in the previous frame.
-     * @param {GameObject} collider 
-     * @param {Array} normal Normal of the original collision
-     */
+    // Called every time the GameObject no longer collides with an object that it was colliding with in the previous frame.
     onCollisionExit(collider, normal) {
 
     }
 
-    /**
-     * Call this method to remove the GameObject.  Will be removed next update.
-     */
+    // Call this to remove an object.  (Removed next update)
     remove() {
         this.toBeRemoved = true;
     }
 
-    /**
-     * Utility method to set the position of the GameObject
-     * @param {Number} x 
-     * @param {Number} y 
-     */
+    // Sets the position of the object.
     setPosition(x,y) {
-        this.position.x = x;
-        this.position.y = y;
+        this.position.set(x,y)
     }
 
-    /**
-     * Returns the euclidian distance to the given GameObject.  Use distsq method where possible to avoid computationally expensive sqrt operation.
-     * @param {GameObject} obj 
-     */
+    // Euclidian distance to the given GameObject / vector.  Use distsq where possible.
     dist(obj) {
         return Math.sqrt(this.distSq(obj))
     }
 
-    /**
-     * Returns the euclidian distance to the given GameObject or {x,y} point sqaured.
-     * @param {GameObject} obj 
-     */
+    // Euclidian distance to the given GameObject / vector squared.
     distSq(obj) {
         if(obj instanceof GameObject) {
             return Math.pow(this.position.x - obj.position.x, 2) + Math.pow(this.position.y - obj.position.y, 2);
         } else {
-            return Math.pow(this.position.x - obj.x, 2) + Math.pow(this.position.y - obj.y, 2);
+            if(obj && obj.x && obj.y) {
+                return Math.pow(this.position.x - obj.x, 2) + Math.pow(this.position.y - obj.y, 2);
+            } else {
+                console.warn('Called distSq with no point/GameObject')
+                return 0
+            }
         }
     }
 
-    /**
-     * Returns the angle from this GameObject to the input GameObject or position.  Angle in radians.
-     * @param {GameObject | {x,y}} input
-     */
+    // Gets the angle from this GameObject to the input GameObject / vector.  (Angle in radians)
     angleTo(obj) {
-        let x,y = 0;
-        if(obj instanceof GameObject) {
-            x = obj.position.x;
-            y = obj.position.y;
-        } else {
-            x = obj.x;
-            y = obj.y
+        const v = this.vTo(obj)
+        if(v === null) {
+            return 0
         }
-        const dx = x - this.position.x;
-        const dy = y - this.position.y;
-        return Math.atan2(dy, dx);
+        return v.angle()
     }
 
-    /**
-     * Set this GameObject's rotation to face the given GameObject or position using the angleTo method.
-     * @param {GameObject | {x,y}} input
-     */
+    // Sets this GameObject's rotation to face the given GameObject / vector
     face(obj) {
         this.rotation = this.angleTo(obj);
     }
 
-    /**
-     * Returns a vector from the current object to the given object or {x,y} point
-     */
+    // Vector from the current object to the given GameObject / vector
     vTo(obj) {
         if(obj instanceof GameObject) {
             return new Vector({
@@ -274,16 +214,19 @@ export class GameObject {
                 y: obj.position.y - this.position.y,
             })
         } else {
-            return new Vector({
-                x: obj.x - this.position.x,
-                y: obj.y - this.position.y,
-            })
+            if(obj && obj.x && obj.y) {
+                return new Vector({
+                    x: obj.x - this.position.x,
+                    y: obj.y - this.position.y,
+                })
+            } else {
+                console.warn('Called vTo with no point/GameObject')
+                return null
+            }
         }
     }
 
-    /**
-     * Returns a normalised vector in the direction the object is facing.
-     */
+    // Normalised vector in the direction the object is facing.
     vForward() {
         return new Vector({
             x: Math.cos(this.rotation),
@@ -291,10 +234,7 @@ export class GameObject {
         })
     }
 
-    /**
-     * Returns the closest instance of the given class in the GameObject list.  Class must extend from GameObject to be in this list.
-     * @param {GameObject} classs 
-     */
+    // Finds closest instance of given class
     closest(classs) {
         const all = GameObject.list.filter(o => o instanceof classs);
         if(all.length == 0) return null;
@@ -302,34 +242,23 @@ export class GameObject {
         return closest;
     }
 
-    /**
-     * Calls init on all instances
-     */
+    // Calls init on all objects
     static initAll() {
         GameObject.list.map(i => i.init())
     }
 
-    /**
-     * Calls update on all instances.  Deletes objects that are set to be removed from the GameObject list.
-     * @param {InputHandler} input 
-     */
+    // Calls update on all objects. Removes from list if marked for removal.
     static updateAll(input) {
         GameObject.list = GameObject.list.filter(o => !o.toBeRemoved)
         GameObject.list.map(i => i.update(input))
     }
 
-    /**
-     * Calls render on all instances.
-     * @param {Renderer} renderer 
-     */
+    // Calls render on all objects.
     static drawAll(renderer) {
         GameObject.list.map(i => i.draw(renderer))
     }
 
-    /**
-     * Propogates click method to all GameObject's whose axis-aligned bounding box contains the click position.
-     * @param {{x,y}} clickPosition
-     */
+    // Propogates click method to all GameObject's by AABox. Returns true if there was at least one collision.
     static onClick({x,y}) {
         let hasCollided = false;
         GameObject.list.map(obj => {
@@ -341,53 +270,70 @@ export class GameObject {
         return hasCollided;
     }
 
-    /**
-     * Collision handler is called every frame to detect and resolve collisions.  
-     * We use a partioning approach to check for collisions only within partitions that each object's axis-aligned bounding box is in.
-     * Each collision is then detected depending on the two objects respective ColliderType.
-     * Collisions are resolved by calculating normal and penetration depth using the Serparating Axis Theorem (SAT). 
-     */
-    static handleCollisions() {
-        const colliders = GameObject.list.filter(g => !g.bypassCollisions); 
-        //shift to fit in zero indexed 2d array
+    // Returns a 2D array paritioning the world space with each object in all partitions where its AABox is present.
+    static partitions(size, colliderOnly = true) {
+        const list = GameObject.list
+        if(colliderOnly) {
+            list = GameObject.list.filter(o => !o.bypassCollisions)
+        }
+        // Need to shift for 0-indexing
         const shiftX = -Math.min(...GameObject.list.map(g => g.position.x),0);
         const shiftY = -Math.min(...GameObject.list.map(g => g.position.y),0);
-        //first we partition gameobjects into the squares their collider occupies (can be multiple)
-        const partitions = [[]];
-        const partitionSize = 500;
-        for(let i = 0; i < colliders.length; i++) {
-            const inPartitions = objectPartitions(partitionSize, colliders[i], shiftX, shiftY);
-            inPartitions.map(([_i,_j]) => {
+        // Put into a 2D array
+        const paritions = new Expanding2DArray();
+        partitions.defaultValue = [];
+        list.map(collider => {
+            const aabox = collider.getAABoundingBox()
+            const top = Math.floor((aabox.tl.y + shiftY) / size);
+            const bottom = Math.floor((aabox.br.y + shiftY) / size);
+            const left = Math.floor((aabox.tl.x + shiftX) / size);
+            const right = Math.floor((aabox.br.x + shiftX) / size);
+            for(let i=left; i<=right; i++) {
+                for(let j=top; j<=bottom; j++) {
+                    const arr = paritions.get(i,j,collider)
+                    if(arr.length === 0) {
+                        paritions.set(i,j,[collider])
+                    } else {
+                        arr.push(collider)
+                    }
+                }
+            }
+        })
+        return paritions.toArray()
+    }
 
-                if(!partitions[_i]) {
-                    partitions[_i] = [];
-                }
-                if(!partitions[_i][_j]) {
-                    partitions[_i][_j] = [];
-                }
-                
-                partitions[_i][_j].push(colliders[i]);
-            })
-        }
+    // Intended to be called every update to detect and resolve collisions.  
+    static handleCollisions() {
+        const partitions = GameObject.partitions()
+        let collisions = Collision.fromPartitions(partitions)
+        collisions = Collision.broadPhase(collisions)
+        const manifolds = Collision.narrowPhase(collisions)
+        manifolds.map(({obj1,obj2,normal}) => {
+            obj1.onCollision(obj2, normal)
+            obj1.collisionList.push({collider: obj2, normal: normal})
+            obj2.onCollision(obj1, normal.scale(-1))
+            obj2.collisionList.push({collider: obj1, normal: normal.scale(-1)})
+        })
+        Collision.resolve(manifolds)
 
         //check for collisions within these paritions (note objects can collide in multiple partitions)
         //we only want one collision for each pair of objects so store hash map of known collisions
-        const collisions = {};
-        partitions.map(row => row.map(cols => {
-            for(let i = 0; i < cols.length; i++) {
-                for(let j = 0; j < i; j++) {
-                    if(cols[i].fixed && cols[j].fixed) {
-                        continue; //dont check collisions between two fixed objects
-                    }
-                    const key = '' + cols[i].id + cols[j].id;
-                    if(!collisions[key]) {
-                        collisions[key] = true;
-                        collisionHandler(cols[i], cols[j]);
-                    }
+        // const collisions = {};
+        // partitions.map(row => row.map(cols => {
+        //     for(let i = 0; i < cols.length; i++) {
+        //         for(let j = 0; j < i; j++) {
+        //             if(cols[i].fixed && cols[j].fixed) {
+        //                 continue; //dont check collisions between two fixed objects
+        //             }
+        //             const key = '' + cols[i].id + cols[j].id;
+        //             if(!collisions[key]) {
+        //                 collisions[key] = true;
+        //                 collisionHandler(cols[i], cols[j]);
+        //             }
                     
-                }
-            }
-        }))
+        //         }
+        //     }
+        // }))
     }
 }
 // GameObject.gravity = 1.2;
