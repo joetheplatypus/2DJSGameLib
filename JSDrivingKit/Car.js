@@ -1,4 +1,4 @@
-import { GameObject,clamp } from "../JSEngineKit/main.js";
+import { GameObject, util } from "../Engine/main.js";
 import { ParticleEmitter } from "../JSParticleKit/main.js";
 
 export class Car extends GameObject {
@@ -50,7 +50,7 @@ export class Car extends GameObject {
     update(input) {
         // Smooth steering input
         if(this.input.turn !== 0) {
-            this.steerAngle = clamp(this.steerAngle + this.input.turn*0.3, -this.maxSteer, this.maxSteer);
+            this.steerAngle = util.clamp(this.steerAngle + this.input.turn*0.3, -this.maxSteer, this.maxSteer);
             
         } else {
             if(this.steerAngle > 0) {
@@ -90,8 +90,8 @@ export class Car extends GameObject {
         const tireGripFront = this.tireGrip;
         const tireGripBack = this.tireGrip * (1 - this.input.handbrake * (1 - this.tireLockGrip));
 
-        const frictionFront = clamp(-this.cornerStiffFront * slipAngleFront, -tireGripFront, tireGripFront) * awFront;
-        const frictionBack = clamp(-this.cornerStiffBack * slipAngleBack, -tireGripBack, tireGripBack) * awBack;
+        const frictionFront = util.clamp(-this.cornerStiffFront * slipAngleFront, -tireGripFront, tireGripFront) * awFront;
+        const frictionBack = util.clamp(-this.cornerStiffBack * slipAngleBack, -tireGripBack, tireGripBack) * awBack;
 
         const brake = Math.min(this.input.brake * this.brakeForce + this.input.handbrake * this.handbrakeForce, this.brakeForce);
         let throttle = 0;

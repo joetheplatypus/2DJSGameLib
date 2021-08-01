@@ -1,5 +1,5 @@
 import { addDOM, getCamera, removeDOM } from "./util.js";
-import { EventEmitter } from '../JSEngineKit/main.js'
+import { EventEmitter } from '../Engine/main.js'
 export class UIBase {
     constructor() {
         this.position = { x:0, y:0 };

@@ -1,4 +1,4 @@
-import { EventEmitter } from '../../JSEngineKit/main.js'
+import { EventEmitter } from '../../Engine/main.js'
 
 export class Input {
     constructor(placeholder, value = '') {

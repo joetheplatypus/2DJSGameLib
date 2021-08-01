@@ -1,4 +1,4 @@
-import { GameObject } from '../JSEngineKit/GameObject.js'
+import { GameObject } from '../Engine/main.js'
 import { Particle } from './Particle.js';
 
 // Collection of particles removed upon creation

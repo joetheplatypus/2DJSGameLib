@@ -1,4 +1,4 @@
-import { GameObject } from '../JSEngineKit/main.js'
+import { GameObject } from '../Engine/main.js'
 import { Particle } from './Particle.js';
 
 // Emitter of particles every update loop.

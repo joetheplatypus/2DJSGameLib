@@ -1,5 +1,4 @@
-import { GameObject } from '../JSEngineKit/GameObject.js'
-import { Item } from '../JSInventoryKit/Item.js';
+import { GameObject } from '../Engine/main.js'
 
 export class Particle extends GameObject {
     constructor() {
