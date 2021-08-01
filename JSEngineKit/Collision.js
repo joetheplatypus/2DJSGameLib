@@ -154,8 +154,9 @@ export default Collision;
 function genManifoldAABoxAABox(obj1, obj2) {
     const box1 = obj1.getAABoundingBox()
     const box2 = obj2.getAABoundingBox()
-    const relPos = new Vector(box2.center().x - box1.center().x, box2.center().y - box1.center().y)
+    const relPos = box2.center().minus(box1.center())
     const overlapX = box1.width()/2 + box2.width()/2 - Math.abs(relPos.x);
+    console.log(overlapX)
     if(overlapX > 0) {
         const overlapY = box1.height()/2 + box2.height()/2 - Math.abs(relPos.y);
         if(overlapY > 0) {
