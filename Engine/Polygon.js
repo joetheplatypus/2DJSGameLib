@@ -57,6 +57,7 @@ export class Polygon {
             })
             const x = this.center().x - this.nodes[i].x;
             const y = this.center().y - this.nodes[i].y;
+            console.log(this.center())
             const a = tangentLine.x;
             const b = -intersectLine.x;
             const c = tangentLine.y;
