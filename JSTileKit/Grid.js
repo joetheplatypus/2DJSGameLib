@@ -16,7 +16,7 @@ export class Grid extends GameObject {
     // Spawns Tile or custom class and adds to grid
     setTile(i, j, sprite, classs = Tile) {
         const worldPos = this.cellToWorld({ x:i, y:j });
-        this.cells.set(i,j,new classs(worldPos.x, worldPos.y, sprite))
+        this.cells.set(i,j,new classs(worldPos.x, worldPos.y, this.cellSize, this.cellSize,  sprite))
     }
 
     // Helpers to convert between cell indexes and world position

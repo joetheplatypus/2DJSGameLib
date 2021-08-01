@@ -1,36 +1,37 @@
 import { TileSheet } from './TileSheet.js';
 import { util } from '../Engine/main.js'
 
-export function loadTileMap(map, grid, layerName = 'tiles') {
+export const TileLoader = {
+    fromTiledLayer(map, grid, layerName = 'Tile Layer 1') {
+         // Parse Tiled format into tile layers and tilesheets needed.
+        const layers = parseTiledFormat(map);
+        const tilesheets = parseTiledSheets(map);
 
-    // Parse Tiled format into tile layers and tilesheets needed.
-    const layers = parseTiledFormat(map);
-    const sheets = parseTiledSheets(map);
+        // Concat sprite/class maps for all tilesheets needed 
+        let spriteMap = [];
+        tilesheets.map(([sheet,start]) => {
+            spriteMap = spriteMap.concat(sheet.generateSpriteMapping(start));
+        })
+        spriteMap = new Map(spriteMap);
 
-    // Concat sprite/class maps for all tilesheets needed 
-    let spriteMap = [];
-    sheets.map(([sheet,start]) => {
-        spriteMap = spriteMap.concat(sheet.generateSpriteMapping(start));
-    })
-    spriteMap = new Map(spriteMap);
+        let classMap = [];
+        tilesheets.map(([sheet,start]) => {
+            classMap = classMap.concat(sheet.generateClassMapping(start));
+        })
+        classMap = new Map(classMap);
 
-    let classMap = [];
-    sheets.map(([sheet,start]) => {
-        classMap = classMap.concat(sheet.generateClassMapping(start));
-    })
-    classMap = new Map(classMap);
+        // Only load specified layer onto grid
+        const tiles = layers.find(l => l.name === layerName).data;
 
-    // Only load specified layer onto grid
-    const tiles = layers.find(l => l.name === layerName).data;
-
-    for(let y = 0; y < tiles.length; y++) {
-        for(let x = 0; x < tiles[0].length; x++) {
-            if(tiles[y][x] === 0) {
-                continue;
+        for(let y = 0; y < tiles.length; y++) {
+            for(let x = 0; x < tiles[0].length; x++) {
+                if(tiles[y][x] === 0) {
+                    continue;
+                }
+                const sprite = spriteMap.get(tiles[y][x])
+                const classs = classMap.get(tiles[y][x])
+                grid.setTile(x,y,sprite,classs)
             }
-            const sprite = spriteMap.get(tiles[y][x])
-            const classs = classMap.get(tiles[y][x])
-            grid.setTile(x,y,sprite,classs)
         }
     }
 }
