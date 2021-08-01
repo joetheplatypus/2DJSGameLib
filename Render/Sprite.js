@@ -1,4 +1,4 @@
-// Stores reference to sprite store in spritesheet by name.
+// Stores reference to sprite stored in spritesheet by name.
 export class Sprite {
     constructor(name, sheet, x, y, w, h) {
         this.name = name;
