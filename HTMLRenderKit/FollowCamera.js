@@ -1,6 +1,7 @@
 import { Vector } from "../Engine/main.js";
 import { Camera } from "./Camera.js";
 
+// Camera that smoothly follows the target.
 export class FollowCamera extends Camera {
     move() {
         const diff = new Vector();

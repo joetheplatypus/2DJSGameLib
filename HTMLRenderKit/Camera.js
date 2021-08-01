@@ -18,11 +18,16 @@ export class Camera {
         return {x:x+this.x-this.w/2, y:y+this.y-this.h/2}
     }
     setTarget(target) {
+        if(!target || typeof target.x !== 'number' || typeof target.y !== 'number') {
+            console.warn('Invalid camera target')
+            return
+        }
         this.target = target;
     }
     setClamps(l,t,r,b) {
         this.clamps = {l,t,r,b};
     }
+
     // To be called on update to move camera towards position target.
     move() {
         this.x = this.target.x;

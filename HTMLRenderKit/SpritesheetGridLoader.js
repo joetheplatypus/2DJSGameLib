@@ -1,26 +1,24 @@
 import { Sprite } from './Sprite.js'
 
-// Utility function to load sprites from a grid based spritesheet using 2D array.  Allows for sheet cropping.
-export function loadSpritesFromGrid(spritesheetName, tileWidth, tileHeight, arrayNames, crop) {
-    if(!crop) {
-        crop = {
-            top:0,
-            bottom:0,
-            left:0,
-            right:0,
-        }
-    }
-    for(let y = 0; y < arrayNames.length; y++) {
-        for(let x = 0; x < arrayNames[0].length; x++) {
-            if(arrayNames[y][x] === null) {
-                continue;
+export const SpritesheetLoader = {
+
+    // Utility function to load sprites from a grid based spritesheet using 2D array.  Allows for sheet cropping.
+    fromGrid(sheetName, gridWidth, gridHeight, spriteNames, crop = {top:0,bottom:0,left:0,right:0}) {
+        for(let y = 0; y < spriteNames.length; y++) {
+            for(let x = 0; x < spriteNames[0].length; x++) {
+                if(spriteNames[y][x] === null) {
+                    continue;
+                }
+                new Sprite(spriteNames[y][x], 
+                    sheetName,
+                    x*gridWidth + crop.left,
+                    y*gridHeight + crop.top,
+                    gridWidth - crop.left - crop.right,
+                    gridHeight - crop.top - crop.bottom);
             }
-            new Sprite(arrayNames[y][x], 
-                spritesheetName,
-                x*tileWidth + crop.left,
-                y*tileHeight + crop.top,
-                tileWidth-crop.left-crop.right,
-                tileHeight-crop.top-crop.bottom);
         }
     }
+
 }
+
+

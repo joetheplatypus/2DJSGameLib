@@ -3,7 +3,7 @@ import { AnimatedSprite } from './AnimatedSprite.js'
 import { Spritesheet } from './Spritesheet.js'
 
 // Helper class to be passed to GameObjects allowing them to draw themselves to the screen. 
-// Uses a layer buffer system to manage allow for multiple draw layers.
+// Uses a layer buffer system to manage multiple draw layers.
 export class Renderer {
 
     constructor(camera, ctx) {
@@ -19,7 +19,7 @@ export class Renderer {
     }
 
     // Buffer up a function to draw a sprite to the screen, relative to camera position.
-    draw(spriteName, _x, _y, scale = 1, rot = 0, flipX = false, crop = {top:0,bottom:0,left:0,right:0}) {
+    draw(spriteName, _x, _y, rot = 1, scale = 0, flipX = false, crop = {top:0,bottom:0,left:0,right:0}) {
         let {x,y} = this.camera.to({x:_x,y:_y});
         let sprite = Sprite.fromName(spriteName);
         if(sprite instanceof AnimatedSprite) {
@@ -108,7 +108,6 @@ export class Renderer {
             return [];
         })
     }
-
 
     setBackgroundImg(src) {
         this.backgroundImg = new Image();
