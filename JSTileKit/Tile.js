@@ -1,4 +1,4 @@
-import { GameObject } from '../JSEngineKit/GameObject.js'
+import { GameObject } from '../Engine/GameObject.js'
 
 export class Tile extends GameObject {
     constructor(x, y, sprite) {

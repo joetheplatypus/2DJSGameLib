@@ -1,11 +1,11 @@
-import { GameObject, grow2d } from "../JSEngineKit/main.js";
+import { GameObject, util } from "../Engine/main.js";
 import { Tile } from "./Tile.js";
 
 export class Grid extends GameObject {
     constructor() {
         super();
         this.bypassCollisions = true;
-        this.cells = [[]];
+        this.cells = new util.Expanding2DArray(null);
         this.cellSize = 128;
     }
 
@@ -13,14 +13,13 @@ export class Grid extends GameObject {
         if(this.cells.length-1 < i || this.cells[0].length-1 < j) {
             return null;
         }
-        return this.cells[i][j];
+        return this.cells.get(j,i);
     }
 
     // Spawns Tile or custom class and adds to grid
     setTile(i, j, sprite, classs = Tile) {
-        grow2d(this.cells, i, j);
         const worldPos = this.cellToWorld({ x:i, y:j });
-        this.cells[i][j] = new classs(worldPos.x, worldPos.y, sprite)
+        this.cells.set(j,i,new classs(worldPos.x, worldPos.y, sprite))
     }
 
     // Helpers to convert between cell indexes and world position

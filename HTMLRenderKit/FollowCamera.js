@@ -1,4 +1,4 @@
-import { Vector } from "../JSEngineKit/main.js";
+import { Vector } from "../Engine/main.js";
 import { Camera } from "./Camera.js";
 
 export class FollowCamera extends Camera {

@@ -1,4 +1,4 @@
-import { clamp } from '../JSEngineKit/main.js'
+import { util } from '../Engine/main.js'
 export class Camera {
     constructor(w, h) {
         this.x = 0;
@@ -28,8 +28,8 @@ export class Camera {
         this.x = this.target.x;
         this.y = this.target.y;
         // clamp
-        this.x = clamp(this.x, this.clamps.l, this.clamps.r)
-        this.y = clamp(this.y, this.clamps.b, this.clamps.t)
+        this.x = util.clamp(this.x, this.clamps.l, this.clamps.r)
+        this.y = util.clamp(this.y, this.clamps.b, this.clamps.t)
         // do we need to smooth?
     }
     isInFrame(x,y,w,h) {
