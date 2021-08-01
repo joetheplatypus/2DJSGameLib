@@ -291,6 +291,7 @@ export class GameObject {
             for(let i=left; i<=right; i++) {
                 for(let j=top; j<=bottom; j++) {
                     const arr = partitions.get(i,j,collider)
+                    console.log(arr)
                     if(arr.length === 0) {
                         partitions.set(i,j,[collider])
                     } else {
@@ -305,13 +306,9 @@ export class GameObject {
     // Intended to be called every update to detect and resolve collisions.  
     static handleCollisions() {
         const partitions = GameObject.partitions(500)
-        console.log(partitions)
         let collisions = Collision.fromPartitions(partitions)
-        console.log(collisions)
         collisions = Collision.broadPhase(collisions)
-        console.log(collisions)
         const manifolds = Collision.narrowPhase(collisions)
-        console.log(manifolds)
         manifolds.map(({obj1,obj2,normal}) => {
             obj1.onCollision(obj2, normal)
             obj1.collisionList.push({collider: obj2, normal: normal})
