@@ -79,6 +79,7 @@ const Collision =  {
                     if(man) return man.reverse()
                     return null
                 } else if(obj2.colliderType === ColliderTypes.Circle) {
+                    console.log('here1')
                     const man = genManifoldCircleAABox(obj2, obj1)
                     if(man) return man.reverse()
                     return null
@@ -95,6 +96,7 @@ const Collision =  {
                 }
             } else if(obj1.colliderType === ColliderTypes.Circle) {
                 if(obj2.colliderType === ColliderTypes.AABox) {
+                    console.log('here2')
                     return genManifoldCircleAABox(obj1, obj2)
                 } else if(obj2.colliderType === ColliderTypes.Box) {
                     return genManifoldCircleBox(obj1, obj2)
