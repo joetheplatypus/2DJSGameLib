@@ -12,7 +12,7 @@ export class GameObject {
         // PARAMETERS
         this.mass = 1; // Mass affects collision resolving (not friction)
         this.friction = {x:0.2,y:0.01};
-        this.dimensions = {x:1,y:1}; //for circular collider uses avg of width and height as radius
+        this.dimensions = new Vector(1,1); //for circular collider uses avg of width and height as radius
         this.restitution = 0.5; // Something to do with collision response?
         
         this.colliderType = ColliderTypes.Box;
@@ -23,10 +23,10 @@ export class GameObject {
 
         // LOCAL VARS
         this.id = Math.random();
-        this.position = Vector.zero.copy()
-        this.velocity = Vector.zero.copy()
-        this.acceleration = Vector.zero.copy()
-        this.drivingForce = Vector.zero.copy()
+        this.position = new Vector()
+        this.velocity = new Vector()
+        this.acceleration = new Vector()
+        this.drivingForce = new Vector()
         this.rotation = 0;
         this.angularVelocity = 0;
         this.lastCollisionList = [];
