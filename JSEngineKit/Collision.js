@@ -187,10 +187,7 @@ function genManifoldBoxAABox(obj1, obj2) {
 function genManifoldCircleAABox(obj1, obj2) {
     const box1 = obj1.getAABoundingBox()
     const box2 = obj2.getAABoundingBox()
-    const relPos = new Vector({
-        x: box2.center().x - box1.center().x,
-        y: box2.center().y - box1.center().y, 
-    })
+    const relPos = box2.center().minus(box1.center())
     const closest = new Vector(relPos);
     const halfWidth = box1.width()/2
     const halfHeight = box1.height()/2;
@@ -222,9 +219,9 @@ function genManifoldCircleAABox(obj1, obj2) {
     }
     d = Math.sqrt(d);
     if(circleInside) {
-        return new Collision.Manifold(obj1, obj2, r-d, normal)
-    } else {
         return new Collision.Manifold(obj1, obj2, r-d, normal.scale(-1))
+    } else {
+        return new Collision.Manifold(obj1, obj2, r-d, normal)
     }
 }
 
