@@ -82,3 +82,16 @@ export class Expanding2DArray {
         return this.arr
     }
 }
+
+export function resizeWindow(canvas, camera) {
+    const f = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        if(camera) {
+            camera.w = canvas.width;
+            camera.h = canvas.height;
+        }   
+    }
+    window.onresize = () => f();
+    f()
+}
