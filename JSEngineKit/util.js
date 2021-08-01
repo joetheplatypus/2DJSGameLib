@@ -51,9 +51,9 @@ export function overlap([m1, M1], [m2, M2]) {
 }
 
 export class Expanding2DArray {
-    constructor() {
-        this.arr = [[]]
-        this.defaultValue = null
+    constructor(defaultValue = null) {
+        this.arr = [[defaultValue]]
+        this.defaultValue = defaultValue
     }
     set(i,j,val) {
         // Add rows
