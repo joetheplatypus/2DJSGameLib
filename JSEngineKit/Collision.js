@@ -24,6 +24,7 @@ const Collision =  {
         }
         reverse() {
             this.normal = this.normal.scale(-1)
+            return this
         }
     },
 
@@ -79,13 +80,8 @@ const Collision =  {
                     if(man) return man.reverse()
                     return null
                 } else if(obj2.colliderType === ColliderTypes.Circle) {
-                    console.log('here1')
                     const man = genManifoldCircleAABox(obj2, obj1)
-                    console.log(man)
-                    if(man) {
-                        consols.log('ay')
-                        return man.reverse()
-                    }
+                    if(man) return man.reverse()
                     return null
                 }
             } else if(obj1.colliderType === ColliderTypes.Box) {
