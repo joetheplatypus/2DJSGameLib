@@ -1,7 +1,7 @@
 import { AABox } from './AABox.js';
 import { ColliderTypes } from './ColliderTypes.js';
-import Collision from './Collision.js'
-import { Expanding2DArray } from './util.js';
+import { Collision } from './Collision.js'
+import { util } from './util.js';
 import { Polygon } from './Polygon.js';
 import { Vector } from './Vector.js'
 
@@ -280,7 +280,7 @@ export class GameObject {
         const shiftX = -Math.min(...GameObject.list.map(g => g.getAABoundingBox().tl.x),0) + size;
         const shiftY = -Math.min(...GameObject.list.map(g => g.getAABoundingBox().tl.y),0) + size;
         // Put into a 2D array
-        const partitions = new Expanding2DArray([]);
+        const partitions = new util.Expanding2DArray([]);
         list.map(collider => {
             const aabox = collider.getAABoundingBox()
             const top = Math.floor((aabox.tl.y + shiftY) / size);
@@ -314,28 +314,8 @@ export class GameObject {
             obj2.collisionList.push({collider: obj1, normal: normal.scale(-1)})
         })
         Collision.resolve(manifolds)
-
-        //check for collisions within these paritions (note objects can collide in multiple partitions)
-        //we only want one collision for each pair of objects so store hash map of known collisions
-        // const collisions = {};
-        // partitions.map(row => row.map(cols => {
-        //     for(let i = 0; i < cols.length; i++) {
-        //         for(let j = 0; j < i; j++) {
-        //             if(cols[i].fixed && cols[j].fixed) {
-        //                 continue; //dont check collisions between two fixed objects
-        //             }
-        //             const key = '' + cols[i].id + cols[j].id;
-        //             if(!collisions[key]) {
-        //                 collisions[key] = true;
-        //                 collisionHandler(cols[i], cols[j]);
-        //             }
-                    
-        //         }
-        //     }
-        // }))
     }
 }
-// GameObject.gravity = 1.2;
 GameObject.gravity = 0;
 GameObject.list = [];
 

@@ -1,4 +1,5 @@
 import { Vector } from './Vector.js'
+
 export class Polygon {
 
     // Collection of points {x,y} in CLOCKWISE direction.
@@ -7,6 +8,7 @@ export class Polygon {
         this.repNodes = [...nodes, nodes[0]]
     }
 
+    // Gets list of normalised tangents as vectors
     tangents() {
         // get tangents
         let tangents = [];
@@ -20,6 +22,7 @@ export class Polygon {
         return tangents.map((v) => v.normalise());
     }
 
+    // Gets list of normalised normals as vectors
     normals() {
         // rotate tangents A/C to get normals
         return this.tangents().map((v) => {
@@ -42,6 +45,7 @@ export class Polygon {
         return [min,max]
     }
 
+    // Creates poly from axis-aligned bounding box
     static fromAABox(box) {
         const tl = box.tl
         const tr = {x:box.br.x, y:box.tl.y}

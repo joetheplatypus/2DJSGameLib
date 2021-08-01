@@ -4,17 +4,14 @@
 */
 
 import { ColliderTypes } from './ColliderTypes.js';
-import { clamp } from './main.js';
 import { Polygon } from './Polygon.js';
-import { avg, overlap } from './util.js';
+import { util } from './util.js';
 import { Vector } from './Vector.js'
-
-
 
 const penDepthSlop = 0.01;
 const penDepthPercent = 2;
 
-const Collision =  {
+export const Collision =  {
     Manifold: class {
         constructor(obj1,obj2,penDepth,normal) {
             this.obj1 = obj1;
@@ -151,7 +148,6 @@ const Collision =  {
         
     }
 }
-export default Collision;
 
 function genManifoldAABoxAABox(obj1, obj2) {
     const box1 = obj1.getAABoundingBox()
@@ -193,8 +189,8 @@ function genManifoldCircleAABox(obj1, obj2) {
     const closest = new Vector(relPos);
     const halfWidth = box1.width()/2
     const halfHeight = box1.height()/2;
-    closest.x = clamp(closest.x, -halfWidth, halfWidth);
-    closest.y = clamp(closest.y, -halfHeight, halfHeight);
+    closest.x = util.clamp(closest.x, -halfWidth, halfWidth);
+    closest.y = util.clamp(closest.y, -halfHeight, halfHeight);
     let circleInside = false;
     if(relPos.equals(closest)) {
         //circle inside box, clamp circle centre to nearest edge
@@ -243,7 +239,7 @@ function genManifoldBoxBox(obj1, obj2, poly1 = obj1.getBoundingBox(), poly2 = ob
         const n = uniqNormals[i];
         const projection1 = poly1.project(n);
         const projection2 = poly2.project(n);
-        const ol = overlap(projection1, projection2)
+        const ol = util.overlap(projection1, projection2)
         if(!ol) {
             return null
         }
@@ -266,8 +262,8 @@ function genManifoldCircleBox(obj1, obj2) {
 }
 
 function genManifoldCircleCircle(obj1, obj2) {
-    const rad1 = avg(obj1.dimensions.x, obj1.dimensions.y)/2
-    const rad2 = avg(obj2.dimensions.x, obj2.dimensions.y)/2
+    const rad1 = util.avg(obj1.dimensions.x, obj1.dimensions.y)/2
+    const rad2 = util.avg(obj2.dimensions.x, obj2.dimensions.y)/2
     const relPos = new Vector({
         x: obj2.getAABoundingBox().center().x - obj1.getAABoundingBox().center().x,
         y: obj2.getAABoundingBox().center().y - obj1.getAABoundingBox().center().y, 

@@ -61,12 +61,27 @@ export class Vector {
     angle() {
         return Math.atan2(this.y, this.x)
     }
-    had(v) {
-        return new Vector(this.x * v.x, this.y * v.y);
-    }
     copy() {
         return new Vector(this)
     }
+    rotate(angle, clockwise = true) {
+        const res = new Vector()
+        if(clockwise) {
+            res.x = Math.cos(angle)*this.x + Math.sin(angle)*this.y
+            res.y = -Math.sin(angle)*this.x + Math.cos(angle)*this.y
+        } else {
+            res.x = Math.cos(angle)*this.x - Math.sin(angle)*this.y
+            res.y = Math.sin(angle)*this.x + Math.cos(angle)*this.y
+        }
+        return res
+    }
+    
+    // Hadamard product
+    had(v) {
+        return new Vector(this.x * v.x, this.y * v.y);
+    }
+
+    // Removes scalar multiples in a list of vectors.  Useful in SAT
     static removeScalarMultiples(list) {
         const newList = []
         for(let i=0; i<list.length; i++) {
@@ -86,6 +101,8 @@ export class Vector {
     }
 
 }
+
+// Please dont mutate these...
 Vector.up = new Vector(0,-1);
 Vector.down = new Vector(0,1);
 Vector.left = new Vector(-1,0);
