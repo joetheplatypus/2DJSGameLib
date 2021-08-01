@@ -243,12 +243,12 @@ function genManifoldBoxBox(obj1, obj2, poly1 = obj1.getBoundingBox(), poly2 = ob
         const n = uniqNormals[i];
         const projection1 = poly1.project(n);
         const projection2 = poly2.project(n);
-        const overlap = overlap(projection1, projection2)
-        if(!overlap) {
+        const ol = overlap(projection1, projection2)
+        if(!ol) {
             return null
         }
         overlaps.push({
-            penDepth: overlap,
+            penDepth: ol,
             normal: n
         })
     }
