@@ -10,16 +10,13 @@ export class Grid extends GameObject {
     }
 
     get(i,j) {
-        if(this.cells.length-1 < i || this.cells[0].length-1 < j) {
-            return null;
-        }
-        return this.cells.get(j,i);
+        return this.cells.get(i,j);
     }
 
     // Spawns Tile or custom class and adds to grid
     setTile(i, j, sprite, classs = Tile) {
         const worldPos = this.cellToWorld({ x:i, y:j });
-        this.cells.set(j,i,new classs(worldPos.x, worldPos.y, sprite))
+        this.cells.set(i,j,new classs(worldPos.x, worldPos.y, sprite))
     }
 
     // Helpers to convert between cell indexes and world position
