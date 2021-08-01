@@ -304,7 +304,8 @@ export class GameObject {
 
     // Intended to be called every update to detect and resolve collisions.  
     static handleCollisions() {
-        const partitions = GameObject.partitions()
+        const partitions = GameObject.partitions(500)
+        console.log(partitions)
         let collisions = Collision.fromPartitions(partitions)
         console.log(collisions)
         collisions = Collision.broadPhase(collisions)
