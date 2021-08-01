@@ -75,9 +75,11 @@ const Collision =  {
                 if(obj2.colliderType === ColliderTypes.AABox) {
                     return genManifoldAABoxAABox(obj1, obj2)
                 } else if(obj2.colliderType === ColliderTypes.Box) {
-                    return genManifoldBoxAABox(obj2, obj1).reverse()
+                    const man = genManifoldBoxAABox(obj2, obj1)
+                    if(man) return man.reverse()
                 } else if(obj2.colliderType === ColliderTypes.Circle) {
-                    return genManifoldCircleAABox(obj2, obj1).reverse()
+                    const man = genManifoldCircleAABox(obj2, obj1)
+                    if(man) return man.reverse()
                 }
             } else if(obj1.colliderType === ColliderTypes.Box) {
                 if(obj2.colliderType === ColliderTypes.AABox) {
@@ -85,7 +87,8 @@ const Collision =  {
                 } else if(obj2.colliderType === ColliderTypes.Box) {
                     return genManifoldBoxBox(obj1, obj2)
                 } else if(obj2.colliderType === ColliderTypes.Circle) {
-                    return genManifoldCircleBox(obj2, obj1).reverse()
+                    const man = genManifoldCircleBox(obj2, obj1)
+                    if(man) return man.reverse()
                 }
             } else if(obj1.colliderType === ColliderTypes.Circle) {
                 if(obj2.colliderType === ColliderTypes.AABox) {
