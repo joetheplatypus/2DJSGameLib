@@ -269,7 +269,6 @@ function genManifoldCircleBox(obj1, obj2) {
     // Find closest point on box to circle
     const p = poly.project(direction)
     const closest = box2.center().add(direction.scale(p[1]))
-    console.log(obj1.position.x, obj2.position.x, closest.x)
     let circleInside = false
     if(closest.minus(box2.center()).modSq() > box1.center().minus(box2.center()).modSq()) {
         circleInside = true
@@ -277,7 +276,7 @@ function genManifoldCircleBox(obj1, obj2) {
     const normal = box1.center().minus(closest)
     let d = normal.modSq();
     if(d > Math.pow(r,2) && !circleInside) {
-        console.log(Math.sqrt(d) - r)
+        console.log(Math.sqrt(d) - r, closest.copy())
         return null
     }
     d = Math.sqrt(d);
