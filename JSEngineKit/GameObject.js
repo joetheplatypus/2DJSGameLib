@@ -272,7 +272,7 @@ export class GameObject {
 
     // Returns a 2D array paritioning the world space with each object in all partitions where its AABox is present.
     static partitions(size, colliderOnly = true) {
-        const list = GameObject.list
+        let list = GameObject.list
         if(colliderOnly) {
             list = GameObject.list.filter(o => !o.bypassCollisions)
         }
