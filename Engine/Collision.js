@@ -275,7 +275,7 @@ function genManifoldCircleBox(obj1, obj2) {
     if(closest.modSq() > box1.center().modSq()) {
         circleInside = true
     }
-    const normal = relPos.minus(closest)
+    const normal = box1.center().minus(closest)
     let d = normal.modSq();
     if(d > Math.pow(r,2) && !circleInside) {
         return null
