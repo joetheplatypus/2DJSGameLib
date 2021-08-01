@@ -265,10 +265,9 @@ function genManifoldCircleBox(obj1, obj2) {
     const r = (obj1.dimensions.x + obj1.dimensions.y)/4;
     const box2 = obj2.getAABoundingBox()
     const poly = obj2.getBoundingBox()
-    const direction = box1.center().minus(box2.center()).normalise()
+    const direction = box1.center().minus(box2.center()).angle()
     // Find closest point on box to circle
-    const p = poly.project(direction)
-    const closest = box2.center().add(direction.scale(p[1]))
+    const closest = poly.outerPoint(direction)
     let circleInside = false
     if(closest.minus(box2.center()).modSq() > box1.center().minus(box2.center()).modSq()) {
         circleInside = true
