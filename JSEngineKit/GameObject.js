@@ -19,7 +19,7 @@ export class GameObject {
         this.bypassCollisions = false; //True - object does not get collision detection with any other objects
         this.doesCollide = true; //False - object does not invoke a collision response in the collider
         this.fixed = false; //True - object not moved to resolve collisions and no gravity applied
-        this.colliderPositionDelta = Vector.zero; // Used to offset collider position from gameobject position
+        this.colliderPositionDelta = new Vector(); // Used to offset collider position from gameobject position
 
         // LOCAL VARS
         this.id = Math.random();
