@@ -215,7 +215,7 @@ function genManifoldCircleAABox(obj1, obj2) {
         }
     }
     const normal = relPos.minus(closest);
-    let d = normal.distSq();
+    let d = normal.modSq();
     const r = (obj2.dimensions.x + obj2.dimensions.y)/4;
     if(d > Math.pow(r,2) && !circleInside) {
         return null
