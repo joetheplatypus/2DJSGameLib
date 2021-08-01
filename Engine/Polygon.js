@@ -51,7 +51,6 @@ export class Polygon {
     outerPoint(angle) {
         const intersectLine = new Vector(Math.cos(angle), Math.sin(angle))
         for(let i = 0; i < this.nodes.length; i++) {
-            let r = 0;
             const tangentLine = new Vector({
                 x: this.repNodes[i+1].x - this.repNodes[i].x,
                 y: this.repNodes[i+1].y - this.repNodes[i].y,
