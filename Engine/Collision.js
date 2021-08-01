@@ -259,7 +259,50 @@ function genManifoldBoxBox(obj1, obj2, poly1 = obj1.getBoundingBox(), poly2 = ob
 
 function genManifoldCircleBox(obj1, obj2) {
     // Just do AABox collision for now
-    return genManifoldCircleAABox(obj1, obj2)
+    //return genManifoldCircleAABox(obj1, obj2)
+    // Nahh i can do it :)
+    const box1 = obj1.getAABoundingBox()
+    const box2 = obj2.getBoundingBox()
+    const relPos = box2.center().minus(box1.center())
+    const halfWidth = box2.width()/2
+    const halfHeight = box2.height()/2;
+    // Find closest point on box to circle
+    const p = box2.project(relPos)
+    console.log(p)
+
+    return genManifoldCircleAABox(obj1,obj2)
+
+
+    // let circleInside = false;
+    // if(relPos.equals(closest)) {
+    //     //circle inside box, clamp circle centre to nearest edge
+    //     circleInside = true;
+    //     if(Math.abs(relPos.x) > Math.abs(relPos.y)) {
+    //         if(closest.x > 0) {
+    //             closest.x = halfWidth;
+    //         } else {
+    //             closest.x = -halfWidth;
+    //         }
+    //     } else {
+    //         if(closest.y > 0) {
+    //             closest.y = halfHeight;
+    //         } else {
+    //             closest.y = -halfHeight;
+    //         }
+    //     }
+    // }
+    // const normal = relPos.minus(closest);
+    // let d = normal.modSq();
+    // const r = (obj1.dimensions.x + obj1.dimensions.y)/4;
+    // if(d > Math.pow(r,2) && !circleInside) {
+    //     return null
+    // }
+    // d = Math.sqrt(d);
+    // if(circleInside) {
+    //     return new Collision.Manifold(obj1, obj2, r-d, normal.scale(-1))
+    // } else {
+    //     return new Collision.Manifold(obj1, obj2, r-d, normal)
+    // }
 }
 
 function genManifoldCircleCircle(obj1, obj2) {
