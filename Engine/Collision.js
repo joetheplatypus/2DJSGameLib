@@ -214,6 +214,7 @@ function genManifoldCircleAABox(obj1, obj2) {
     let d = normal.modSq();
     const r = (obj1.dimensions.x + obj1.dimensions.y)/4;
     if(d > Math.pow(r,2) && !circleInside) {
+        console.log('nope ' + (d - Math.pow(r,2)) + ' off')
         return null
     }
     d = Math.sqrt(d);
