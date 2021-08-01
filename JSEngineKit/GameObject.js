@@ -1,7 +1,7 @@
 import { AABox } from './AABox.js';
 import { ColliderTypes } from './ColliderTypes.js';
 import Collision from './Collision.js'
-import { Expanding2DArray } from './Expanding2DArray.js';
+import { Expanding2DArray } from './util.js';
 import { Polygon } from './Polygon.js';
 import { Vector } from './Vector.js'
 
