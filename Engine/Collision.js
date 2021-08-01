@@ -262,14 +262,30 @@ function genManifoldCircleBox(obj1, obj2) {
     //return genManifoldCircleAABox(obj1, obj2)
     // Nahh i can do it :)
     const box1 = obj1.getAABoundingBox()
+    const r = (obj1.dimensions.x + obj1.dimensions.y)/4;
     const box2 = obj2.getAABoundingBox()
-    const poly = obj2.getBoundingBox()
     const relPos = box2.center().minus(box1.center())
-    const halfWidth = box2.width()/2
-    const halfHeight = box2.height()/2;
+    const poly = obj2.getBoundingBox()
+    const direction = box1.center().minus(box2.center()).normalise()
     // Find closest point on box to circle
-    const p = poly.project(relPos)
-    console.log(p)
+    const p = poly.project(direction)
+    const closest = box2.center().add(direction.scale(p[1]))
+    let circleInside = false
+    if(closest.modSq() > box1.center().modSq()) {
+        circleInside = true
+    }
+    const normal = relPos.minus(closest)
+    let d = normal.modSq();
+    if(d > Math.pow(r,2) && !circleInside) {
+        return null
+    }
+    d = Math.sqrt(d);
+    if(circleInside) {
+        return new Collision.Manifold(obj1, obj2, r-d, normal.scale(-1))
+    } else {
+        return new Collision.Manifold(obj1, obj2, r-d, normal)
+    }
+    
 
     return genManifoldCircleAABox(obj1,obj2)
 
