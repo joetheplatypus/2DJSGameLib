@@ -1,3 +1,4 @@
+import { util } from './util.js';
 import { Vector } from './Vector.js'
 
 export class Polygon {
@@ -6,6 +7,12 @@ export class Polygon {
     constructor(...nodes) {
         this.nodes = nodes;
         this.repNodes = [...nodes, nodes[0]]
+    }
+
+    center() {
+        const x = util.avg(this.nodes.map(n => n.x))
+        const y = util.avg(this.nodes.map(n => n.y))
+        return new Vector(x,y)
     }
 
     // Gets list of normalised tangents as vectors
@@ -38,6 +45,40 @@ export class Polygon {
             }
         }
         return [min,max]
+    }
+
+    // Get the point on the edge of this polygon at the given angle from the center
+    outerPoint(angle) {
+        const intersectLine = new Vector(Math.cos(angle), Math.sin(angle))
+        for(let i = 0; i < this.nodes.length; i++) {
+            let r = 0;
+            const tangentLine = new Vector({
+                x: this.repNodes[i+1].x - this.repNodes[i].x,
+                y: this.repNodes[i+1].y - this.repNodes[i].y,
+            })
+            const x = this.center().x - this.nodes[i].x;
+            const y = this.center().y - this.nodes[i].y;
+            const a = tangentLine.x;
+            const b = -intersectLine.x;
+            const c = tangentLine.y;
+            const d = -intersectLine.y;
+            const det = a*d-b*c;
+            if(det === 0) continue;
+            const inv_a = (1/det) * d;
+            const inv_b = (1/det) * -b;
+            const inv_c = (1/det) * -c;
+            const inv_d = (1/det) * a;
+            const k = inv_a*x + inv_b*y;
+            const r = inv_c*x + inv_d*y;
+            if(k <= 1 && k >= 0) {
+                // We have a winner
+                return this.center().add(intersectLine.scale(r))
+            }
+
+            // this.center() - this.nodes[i]  =?=  + k*tangentLine - r*intersectLine
+
+        }
+        return 0
     }
 
     // Creates poly from axis-aligned bounding box
