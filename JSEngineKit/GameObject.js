@@ -277,8 +277,8 @@ export class GameObject {
             list = GameObject.list.filter(o => !o.bypassCollisions)
         }
         // Need to shift for 0-indexing
-        const shiftX = -Math.min(...GameObject.list.map(g => g.position.x),0);
-        const shiftY = -Math.min(...GameObject.list.map(g => g.position.y),0);
+        const shiftX = -Math.min(...GameObject.list.map(g => g.position.x),0) + size;
+        const shiftY = -Math.min(...GameObject.list.map(g => g.position.y),0) + size;
         // Put into a 2D array
         const partitions = new Expanding2DArray();
         partitions.defaultValue = [];
