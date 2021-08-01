@@ -306,7 +306,9 @@ export class GameObject {
     static handleCollisions() {
         const partitions = GameObject.partitions()
         let collisions = Collision.fromPartitions(partitions)
+        console.log(collisions)
         collisions = Collision.broadPhase(collisions)
+        console.log(collisions)
         const manifolds = Collision.narrowPhase(collisions)
         console.log(manifolds)
         manifolds.map(({obj1,obj2,normal}) => {
