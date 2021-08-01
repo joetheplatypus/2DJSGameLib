@@ -280,7 +280,7 @@ export class GameObject {
         const shiftX = -Math.min(...GameObject.list.map(g => g.position.x),0);
         const shiftY = -Math.min(...GameObject.list.map(g => g.position.y),0);
         // Put into a 2D array
-        const paritions = new Expanding2DArray();
+        const partitions = new Expanding2DArray();
         partitions.defaultValue = [];
         list.map(collider => {
             const aabox = collider.getAABoundingBox()
@@ -290,16 +290,16 @@ export class GameObject {
             const right = Math.floor((aabox.br.x + shiftX) / size);
             for(let i=left; i<=right; i++) {
                 for(let j=top; j<=bottom; j++) {
-                    const arr = paritions.get(i,j,collider)
+                    const arr = partitions.get(i,j,collider)
                     if(arr.length === 0) {
-                        paritions.set(i,j,[collider])
+                        partitions.set(i,j,[collider])
                     } else {
                         arr.push(collider)
                     }
                 }
             }
         })
-        return paritions.toArray()
+        return partitions.toArray()
     }
 
     // Intended to be called every update to detect and resolve collisions.  
