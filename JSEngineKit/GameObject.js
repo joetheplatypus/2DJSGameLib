@@ -305,11 +305,11 @@ export class GameObject {
     static handleCollisions() {
         const partitions = GameObject.partitions(500)
         let collisions = Collision.fromPartitions(partitions)
-        console.log('partition coll: ' + collisions.length)
+        if(collisions.length > 0) console.log('partition coll: ' + collisions.length)
         collisions = Collision.broadPhase(collisions)
-        console.log('broad phase coll: ' + collisions.length)
+        if(collisions.length > 0) console.log('broad phase coll: ' + collisions.length)
         const manifolds = Collision.narrowPhase(collisions)
-        console.log('narrow phase coll: ' + manifolds.length)
+        if(manifolds.length > 0) console.log('narrow phase coll: ' + manifolds.length)
         manifolds.map(({obj1,obj2,normal}) => {
             obj1.onCollision(obj2, normal)
             obj1.collisionList.push({collider: obj2, normal: normal})
