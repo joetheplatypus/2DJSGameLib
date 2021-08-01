@@ -99,6 +99,7 @@ const Collision =  {
                     return genManifoldCircleCircle(obj1, obj2)
                 }
             }
+            return null
         })
         return ret.filter(x => x !== null)
     },
