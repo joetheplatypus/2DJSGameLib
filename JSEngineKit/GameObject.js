@@ -42,12 +42,12 @@ export class GameObject {
         const p = this.getBoundingBox();
         const [gtl,gtr,gbr,gbl] = p.nodes;
         const tl = {
-            x:Math.min(gbl.x,gbr.x,gtl.x,gtr.x) + pos.x + cpd.x,
-            y:Math.min(gbl.y,gbr.y,gtl.y,gtr.y) + pos.y + cpd.y,
+            x:Math.min(gbl.x,gbr.x,gtl.x,gtr.x),
+            y:Math.min(gbl.y,gbr.y,gtl.y,gtr.y),
         }
         const br = {
-            x:Math.max(gbl.x,gbr.x,gtl.x,gtr.x) + pos.x + cpd.x,
-            y:Math.max(gbl.y,gbr.y,gtl.y,gtr.y) + pos.y + cpd.y,
+            x:Math.max(gbl.x,gbr.x,gtl.x,gtr.x),
+            y:Math.max(gbl.y,gbr.y,gtl.y,gtr.y),
         }
         return new AABox(tl,br)
     }
