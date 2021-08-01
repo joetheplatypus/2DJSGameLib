@@ -26,6 +26,7 @@ export class Polygon {
     normals() {
         // rotate tangents A/C to get normals
         return this.tangents().map((v) => {
+            return v.rotate(Math.PI/2)
             return new Vector({ x: v.y, y: -v.x });
         })
     }

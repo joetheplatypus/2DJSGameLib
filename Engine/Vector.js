@@ -64,7 +64,7 @@ export class Vector {
     copy() {
         return new Vector(this)
     }
-    rotate(angle, clockwise = true) {
+    rotate(angle, clockwise = false) {
         const res = new Vector()
         if(clockwise) {
             res.x = Math.cos(angle)*this.x + Math.sin(angle)*this.y
