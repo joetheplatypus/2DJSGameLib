@@ -19,7 +19,7 @@ export class Renderer {
     }
 
     // Buffer up a function to draw a sprite to the screen, relative to camera position.
-    draw(spriteName, _x, _y, rot = 1, scale = 0, flipX = false, crop = {top:0,bottom:0,left:0,right:0}) {
+    draw(spriteName, _x, _y, rot = 0, scale = 1, flipX = false, crop = {top:0,bottom:0,left:0,right:0}) {
         let {x,y} = this.camera.to({x:_x,y:_y});
         let sprite = Sprite.fromName(spriteName);
         if(sprite instanceof AnimatedSprite) {
