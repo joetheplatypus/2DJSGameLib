@@ -280,7 +280,7 @@ export class GameObject {
         const shiftX = -Math.min(...GameObject.list.map(g => g.position.x),0) + size;
         const shiftY = -Math.min(...GameObject.list.map(g => g.position.y),0) + size;
         // Put into a 2D array
-        const partitions = new Expanding2DArray(defaultValue = []);
+        const partitions = new Expanding2DArray([]);
         list.map(collider => {
             const aabox = collider.getAABoundingBox()
             const top = Math.floor((aabox.tl.y + shiftY) / size);
