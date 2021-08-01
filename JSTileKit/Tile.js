@@ -12,6 +12,7 @@ export class Tile extends GameObject {
         Tile.list.push(this)
     }
     draw(renderer) {
+        console.log(this.sprite)
         renderer.setLayer(1);
         renderer.draw(this.sprite, this.position.x, this.position.y)
     }
