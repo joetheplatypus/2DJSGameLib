@@ -274,7 +274,7 @@ function genManifoldCircleCircle(obj1, obj2) {
         y: obj2.getAABoundingBox().center().y - obj1.getAABoundingBox().center().y, 
     })
     const r = rad1+rad2;
-    if(relPos.distSq() > Math.pow(r,2)) {
+    if(relPos.modSq() > Math.pow(r,2)) {
         return null
     }
     const d = relPos.dist();
