@@ -308,6 +308,7 @@ export class GameObject {
         let collisions = Collision.fromPartitions(partitions)
         collisions = Collision.broadPhase(collisions)
         const manifolds = Collision.narrowPhase(collisions)
+        console.log(manifolds)
         manifolds.map(({obj1,obj2,normal}) => {
             obj1.onCollision(obj2, normal)
             obj1.collisionList.push({collider: obj2, normal: normal})
