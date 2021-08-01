@@ -290,7 +290,8 @@ export class GameObject {
             const right = Math.floor((aabox.br.x + shiftX) / size);
             for(let i=left; i<=right; i++) {
                 for(let j=top; j<=bottom; j++) {
-                    const arr = partitions.get(i,j,collider)
+                    console.log(i,j)
+                    const arr = partitions.get(i,j)
                     console.log(arr)
                     if(arr.length === 0) {
                         partitions.set(i,j,[collider])
