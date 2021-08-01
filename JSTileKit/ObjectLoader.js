@@ -1,7 +1,7 @@
 export const ObjectLoader = {
 
     // Loads GameObjects from layer.  `class` tag specifies class in mapping and `param` is passed as paramters
-    fromTiledLayer(map, layerName, classMapping) {
+    fromTiledLayer(map, classMapping, layerName = 'Object Layer 1') {
         // get list of objects
         let objs = map.layers.find(l => l.name === layerName).objects;
         // filter out those without tag
@@ -25,5 +25,5 @@ export const ObjectLoader = {
             }
         })
     }
-    
+
 }
