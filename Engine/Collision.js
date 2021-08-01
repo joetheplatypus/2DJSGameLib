@@ -187,9 +187,8 @@ function genManifoldCircleAABox(obj1, obj2) {
     const box2 = obj2.getAABoundingBox()
     const relPos = box2.center().minus(box1.center())
     const closest = new Vector(relPos);
-    const halfWidth = box1.width()/2
-    const halfHeight = box1.height()/2;
-    console.log(halfWidth, halfHeight)
+    const halfWidth = box2.width()/2
+    const halfHeight = box2.height()/2;
     // Find closest point on box to circle
     closest.x = util.clamp(closest.x, -halfWidth, halfWidth);
     closest.y = util.clamp(closest.y, -halfHeight, halfHeight);
@@ -215,7 +214,6 @@ function genManifoldCircleAABox(obj1, obj2) {
     let d = normal.modSq();
     const r = (obj1.dimensions.x + obj1.dimensions.y)/4;
     if(d > Math.pow(r,2) && !circleInside) {
-        console.log('nope ' + (d - Math.pow(r,2)) + ' off')
         return null
     }
     d = Math.sqrt(d);
