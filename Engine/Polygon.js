@@ -57,30 +57,22 @@ export class Polygon {
             })
             const x = this.center().x - this.nodes[i].x;
             const y = this.center().y - this.nodes[i].y;
-            console.log(this.center())
             const a = tangentLine.x;
             const b = -intersectLine.x;
             const c = tangentLine.y;
             const d = -intersectLine.y;
-            console.log(a,b,c,d)
             const det = a*d-b*c;
             if(det === 0) continue;
             const inv_a = (1/det) * d;
             const inv_b = (1/det) * -b;
             const inv_c = (1/det) * -c;
             const inv_d = (1/det) * a;
-            console.log(inv_a,inv_b,inv_c,inv_d)
             const k = inv_a*x + inv_b*y;
             const r = inv_c*x + inv_d*y;
-            console.log(k,r)
             if(k <= 1 && k >= 0) {
-                console.log('woop')
                 // We have a winner
                 return this.center().add(intersectLine.scale(r))
             }
-
-            // this.center() - this.nodes[i]  =?=  + k*tangentLine - r*intersectLine
-
         }
         return 0
     }
