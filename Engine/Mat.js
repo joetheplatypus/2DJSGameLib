@@ -2,6 +2,7 @@ import { Vector } from "./Vector.js";
 
 // 2x2 matrix math
 export class Mat {
+    
     constructor(p1,p2,p3,p4) {
         if(p1 instanceof Mat) {
             this.a = p1.a;
@@ -35,7 +36,43 @@ export class Mat {
             this.d = 0;
         }
     }
+    det() {
+        return this.a*this.d - this.b*this.c
+    }
+    inv() {
+        const d = this.det();
+        if(d === 0) {
+            console.warn('Cannots invert a non-invertible matrix')
+            return null
+        }
+        return this.cofactors().scale(1/d);
+    }
+    transpose() {
+        return new Mat(
+            this.a, this.c,
+            this.b, this.d
+        )
+    }
+    minors() {
+        return new Mat(
+            this.d, this.b,
+            this.c, this.a
+        )
+    }
+    cofactors() {
+        return new Mat(
+            this.d, -this.b,
+            -this.c, this.a
+        )
+    }
+    scale(t) {
+        return new Mat(
+            this.a*t, this.b*t,
+            this.c*t, this.d*t
+        )
+    }
 
+    // Dot product to apply matrix transformation to vector or matrix.  Returns input type.
     dot(m) {
         if(m instanceof Vector) {
             return new Vector(this.a*m.x + this.b*m.y, this.c*m.x + this.d*m.y);
@@ -45,47 +82,6 @@ export class Mat {
                 this.c*m.a + this.d*m.c, this.c*m.b + this.d*m.d,
             )
         }
-    }
-
-    det() {
-        return this.a*this.d - this.b*this.c
-    }
-
-    inv() {
-        const d = this.det();
-        if(d === 0) {
-            console.warn('Cannots invert a non-invertible matrix')
-            return null
-        }
-        return this.cofactors().scale(1/d);
-    }
-
-    transpose() {
-        return new Mat(
-            this.a, this.c,
-            this.b, this.d
-        )
-    }
-
-    minors() {
-        return new Mat(
-            this.d, this.b,
-            this.c, this.a
-        )
-    }
-
-    cofactors() {
-        return new Mat(
-            this.d, -this.b,
-            -this.c, this.a
-        )
-    }
-
-    scale(t) {
-        return new Mat(
-            this.a*t, this.b*t,
-            this.c*t, this.d*t
-        )
     }
 
 }
