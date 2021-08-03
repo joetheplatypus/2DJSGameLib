@@ -4,12 +4,10 @@ import { Camera } from "./Camera.js";
 // Camera that smoothly follows the target.
 export class FollowCamera extends Camera {
     move() {
-        const diff = new Vector();
-        diff.x = this.target.x - this.x;
-        diff.y = this.target.y - this.y;
-        const r = 10 * Math.max(Math.abs(dx), Math.abs(dy)) / 50;
+        const diff = this.target.minus(this.position)
+        const r = Math.max(diff.abs().x, diff.abs().y) / 5;
         const direction = diff.angle();
-        const dist = diff.distSq();
+        const dist = diff.modSq();
         let speed = 0;
         // smoothing
         if(dist < Math.pow(r,2)) {
@@ -19,11 +17,11 @@ export class FollowCamera extends Camera {
         } else {
             speed = r * 1/2;
         }
-        this.x += speed * Math.cos(direction);
-        this.y += speed * Math.sin(direction);
+        this.position.x += speed * Math.cos(direction);
+        this.position.y += speed * Math.sin(direction);
         
         // clamp
-        this.x = clamp(this.x, this.clamps.l, this.clamps.r)
-        this.y = clamp(this.y, this.clamps.b, this.clamps.t)
+        this.position.x = clamp(this.position.x, this.clamps.l, this.clamps.r)
+        this.position.y = clamp(this.position.y, this.clamps.b, this.clamps.t)
     }
 }
