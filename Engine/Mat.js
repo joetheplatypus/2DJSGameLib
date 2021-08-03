@@ -1,4 +1,4 @@
-import { Vector } from "./Vector";
+import { Vector } from "./Vector.js";
 
 // 2x2 matrix math
 export class Mat {
