@@ -65,7 +65,7 @@ export class Polygon {
             const inv_m = m.inv()
             console.log(inv_m)
             if(inv_m == null) continue;
-            const { k,r } = inv_m.dot(v);
+            const { x:k,y:r } = inv_m.dot(v);
             console.log(k,r)
             if(k >= 0 && k <= 1 && r >= 0) {
                 return this.center().add(intersectLine.scale(r))
