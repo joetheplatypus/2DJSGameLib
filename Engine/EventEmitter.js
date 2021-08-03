@@ -1,3 +1,4 @@
+// Simple event subscription provider
 export class EventEmitter {
     constructor() {
         this.listeners = [];

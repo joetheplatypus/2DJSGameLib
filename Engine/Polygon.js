@@ -1,3 +1,4 @@
+import { Mat } from './Mat.js';
 import { util } from './util.js';
 import { Vector } from './Vector.js'
 
@@ -55,24 +56,36 @@ export class Polygon {
                 x: this.repNodes[i+1].x - this.repNodes[i].x,
                 y: this.repNodes[i+1].y - this.repNodes[i].y,
             })
-            const x = this.center().x - this.nodes[i].x;
-            const y = this.center().y - this.nodes[i].y;
-            const a = tangentLine.x;
-            const b = -intersectLine.x;
-            const c = tangentLine.y;
-            const d = -intersectLine.y;
-            const det = a*d-b*c;
-            if(det === 0) continue;
-            const inv_a = (1/det) * d;
-            const inv_b = (1/det) * -b;
-            const inv_c = (1/det) * -c;
-            const inv_d = (1/det) * a;
-            const k = inv_a*x + inv_b*y;
-            const r = inv_c*x + inv_d*y;
-            if(k <= 1 && k >= 0 && r >= 0) {
-                // We have a winner
+            const p = new Vector(this.nodes[i])
+            const v = this.center().minus(p)
+            const m = new Mat(
+                tangentLine.x, -intersectLine.x,
+                tangentLine.y, -intersectLine.y
+            )
+            const inv_m = m.inv()
+            if(inv_m == null) continue;
+            const { k,r } = inv_m.dot(v);
+            if(k >= 0 && k <= 1 && r >= 0) {
                 return this.center().add(intersectLine.scale(r))
             }
+            // const x = this.center().x - this.nodes[i].x;
+            // const y = this.center().y - this.nodes[i].y;
+            // const a = tangentLine.x;
+            // const b = -intersectLine.x;
+            // const c = tangentLine.y;
+            // const d = -intersectLine.y;
+            // const det = a*d-b*c;
+            // if(det === 0) continue;
+            // const inv_a = (1/det) * d;
+            // const inv_b = (1/det) * -b;
+            // const inv_c = (1/det) * -c;
+            // const inv_d = (1/det) * a;
+            // const k = inv_a*x + inv_b*y;
+            // const r = inv_c*x + inv_d*y;
+            // if(k <= 1 && k >= 0 && r >= 0) {
+            //     // We have a winner
+            //     return this.center().add(intersectLine.scale(r))
+            // }
         }
         return 0
     }

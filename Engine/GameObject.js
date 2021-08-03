@@ -37,8 +37,6 @@ export class GameObject {
 
     // Returns the axis-aligned bounding box that the object is contained within.
     getAABoundingBox() {
-        const pos = this.position;
-        const cpd = this.colliderPositionDelta
         const p = this.getBoundingBox();
         const [gtl,gtr,gbr,gbl] = p.nodes;
         const tl = {
@@ -82,7 +80,7 @@ export class GameObject {
         this.updateCollisions();
     }
 
-    // Updates kinematics, gravity etc.  Use impulse() or set this.drivingForce to apply forces to an object.
+    // Updates kinematics, gravity etc.  Use impulse() or set drivingForce to apply forces to an object.
     updatePhysics() {
         // Apply gravity
         if(!this.fixed) {
@@ -276,7 +274,7 @@ export class GameObject {
         if(colliderOnly) {
             list = GameObject.list.filter(o => !o.bypassCollisions)
         }
-        // Need to shift for 0-indexing
+        // Need to shift for 0-indexing to account for negative positions
         const shiftX = -Math.min(...GameObject.list.map(g => g.getAABoundingBox().tl.x),0) + size;
         const shiftY = -Math.min(...GameObject.list.map(g => g.getAABoundingBox().tl.y),0) + size;
         // Put into a 2D array

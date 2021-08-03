@@ -1,6 +1,7 @@
 import { EventEmitter } from './EventEmitter.js';
 import { GameObject } from './GameObject.js'
 
+// GameObject with health
 export class Entity extends GameObject{
     constructor() {
         super();
