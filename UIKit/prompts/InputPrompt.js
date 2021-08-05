@@ -7,7 +7,7 @@ import { Title } from "../components/Title.js";
 import { Panel } from "../Panel.js";
 
 export class InputPrompt extends Panel {
-    constructor(title, inputs, values, cb) {
+    constructor(title, inputs, values, cb, force = false) {
         super()
         this.worldCoords = false;
         this.removeOnClose = true;
@@ -23,11 +23,19 @@ export class InputPrompt extends Panel {
             } else {
                 inputDoms.push(this.addComponent(Input, inputs[i], values[i]))
             }            
-        }        
-        this.addComponent(Buttons, 'Cancel', () => {this.close()}, 'OK', () => {
-            this.close();
-            cb(...inputDoms.map(i => i.getValue()))
-        })
+        }
+        if(force) {
+            this.addComponent(Buttons, 'OK', () => {
+                this.close();
+                cb(...inputDoms.map(i => i.getValue()))
+            })
+        } else {
+            this.addComponent(Buttons, 'Cancel', () => {this.close()}, 'OK', () => {
+                this.close();
+                cb(...inputDoms.map(i => i.getValue()))
+            })
+        }
+        
         Blur.on();
         this.show()
     }
