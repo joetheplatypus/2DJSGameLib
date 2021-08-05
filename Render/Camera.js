@@ -4,7 +4,7 @@ import { util, Vector } from '../Engine/main.js'
 export class Camera {
     constructor(w, h) {
         this.position = new Vector();
-        this.dimensions = new Vector();
+        this.dimensions = new Vector(w, h);
         this.target = new Vector();
         this.clamps = { l:null,r:null,t:null,b:null } // world position clamps
     }
