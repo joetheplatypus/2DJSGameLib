@@ -1,5 +1,5 @@
 import { GameObject, util } from "../Engine/main.js";
-import { ParticleEmitter } from "../JSParticleKit/main.js";
+import { ParticleEmitter } from "../Particles/main.js";
 
 export class Car extends GameObject {
     constructor() {

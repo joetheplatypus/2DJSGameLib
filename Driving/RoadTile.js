@@ -1,4 +1,4 @@
-import { Tile } from "../JSTileKit/main.js";
+import { Tile } from "../Tiles/main.js";
 
 export class RoadTile extends Tile {
     constructor(x, y, sprite) {
