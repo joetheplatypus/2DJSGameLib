@@ -84,6 +84,11 @@ export class Vector {
         return new Vector(this.x * v.x, this.y * v.y);
     }
 
+    // Returns raw object. Useful for serialisation
+    toObj() {
+        return { x:this.x, y:this.y }
+    }
+
     // Removes scalar multiples in a list of vectors.  Useful in SAT
     static removeScalarMultiples(list) {
         const newList = []
