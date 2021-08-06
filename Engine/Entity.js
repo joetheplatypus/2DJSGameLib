@@ -32,5 +32,13 @@ export class Entity {
             return false;
         })
     }
+    static allOf(component) {
+        return Entity.list.map(e => {
+            if(e.components.find(c => c instanceof component)) {
+                return c;
+            }
+            return null;
+        }).map(i => i !== null)
+    }
 }
 Entity.list = []
