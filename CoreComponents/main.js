@@ -1,1 +1,1 @@
-export * from 'Physics.js'
+export * from './Physics.js'
