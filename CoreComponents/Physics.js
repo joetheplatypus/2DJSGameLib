@@ -39,7 +39,7 @@ export class Physics extends Component {
 
         if(!this.fixed) {
             // Object does not need to be aware of gravity so apply and remove every update
-            this.drivingForce.y -= GameObject.gravity
+            this.drivingForce.y -= Physics.gravity
         }
 
         if(this._apply_impulse) {
