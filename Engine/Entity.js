@@ -35,10 +35,7 @@ export class Entity {
     }
     static allOf(component) {
         return Entity.list.map(e => {
-            if(e.components.find(c => c instanceof component)) {
-                return c;
-            }
-            return null;
+            return e.components.find(c => c instanceof component)
         }).map(i => i !== null)
     }
 }
