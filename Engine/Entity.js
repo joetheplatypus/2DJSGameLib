@@ -1,27 +1,28 @@
-import { EventEmitter } from './EventEmitter.js';
-import { GameObject } from './GameObject.js'
+import { Vector } from "./Vector.js"
 
-// GameObject with health
-export class Entity extends GameObject{
+// Base object, stores list of components which provide functionality
+export class Entity {
     constructor() {
-        super();
-        this.maxHealth = 100;
-        this.health = this.maxHealth;
-        this.onDeath = new EventEmitter(); // Useful event to hook
-        this.onDeath.add(() => this.death());
+        this.components = [];
+        this.position = new Vector();
+        this.rotation = 0;
     }
-
-    // Deals the specified damage points to the entity's health
-    damage(amount) {
-        this.health -= amount;
-        if(this.health <= 0) {
-            this.health = 0;
-            this.onDeath.call();
-        }
+    init() {
+        this.components.map(c => c.init())
     }
-
-    // Called on death
-    death() {
-        this.remove();
+    update() {
+        this.components.map(c => c.update())
+    }
+    addComponent(component, ...args) {
+        const c = new component(this, args)
+        this.components.push(c)
+        return c
+    }
+    getComponent(componentType) {
+        return this.components.find(c => c instanceof componentType)
+    }
+    static updateAll() {
+        Entity.list.map(e => e.update())
     }
 }
+Entity.list = []
