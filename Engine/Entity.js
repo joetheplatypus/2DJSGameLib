@@ -24,5 +24,13 @@ export class Entity {
     static updateAll() {
         Entity.list.map(e => e.update())
     }
+    static allWith(component) {
+        return Entity.list.filter(e => {
+            if(e.components.find(c => c instanceof component)) {
+                return true;
+            }
+            return false;
+        })
+    }
 }
 Entity.list = []
