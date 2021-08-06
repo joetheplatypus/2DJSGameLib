@@ -14,7 +14,7 @@ export class Entity {
         this.components.map(c => c.update())
     }
     addComponent(component, ...args) {
-        const c = new component(this, args)
+        const c = new component(this, ...args)
         this.components.push(c)
         return c
     }
