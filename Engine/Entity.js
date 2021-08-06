@@ -6,6 +6,7 @@ export class Entity {
         this.components = [];
         this.position = new Vector();
         this.rotation = 0;
+        Entity.list.push(this)
     }
     init() {
         this.components.map(c => c.init())
