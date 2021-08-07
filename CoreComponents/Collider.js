@@ -1,10 +1,10 @@
 import { Component, AABox, Vector, Entity, util, Collision } from "../Engine/main.js";
 
 export class Collider extends Component {
-    constructor(go, type) {
+    constructor(go, type, x=0, y=0) {
         super(go)
         this.type = type
-        this.dimensions = new Vector()
+        this.dimensions = new Vector(x,y)
         this.position_delta = new Vector()
     }
     getAABox() {
@@ -70,13 +70,4 @@ export class Collider extends Component {
     }
     
     
-}
-
-Collider.ColliderTypes = {
-    // Axis-Aligned Bounding Box
-    AABox: 'AABox',
-    // Box with rotation
-    Box:'Box',
-    // Simple circle collider using avg of width and height as diameter
-    Circle:'Circle',
 }
