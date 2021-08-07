@@ -54,6 +54,20 @@ export class Collider extends Component {
         })
         return partitions.toArray()
     }
+    // Intended to be called every update to detect and resolve collisions.  
+    static handleCollisions() {
+        const partitions = Collider.partition(500)
+        let collisions = Collision.fromPartitions(partitions)
+        collisions = Collision.broadPhase(collisions)
+        const manifolds = Collision.narrowPhase(collisions)
+        manifolds.map(({obj1,obj2,normal}) => {
+            obj1.onCollision(obj2, normal)
+            obj1.collisionList.push({collider: obj2, normal: normal})
+            obj2.onCollision(obj1, normal.scale(-1))
+            obj2.collisionList.push({collider: obj1, normal: normal.scale(-1)})
+        })
+        Collision.resolve(manifolds)
+    }
     
     
 }

@@ -3,7 +3,6 @@
     https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331
 */
 
-import { Collider } from '../CoreComponents/main.js';
 import { ColliderTypes } from './ColliderTypes.js';
 import { Polygon } from './Polygon.js';
 import { util } from './util.js';
@@ -13,21 +12,6 @@ const penDepthSlop = 0.01;
 const penDepthPercent = 2;
 
 export const Collision =  {
-
-    // Intended to be called every update to detect and resolve collisions.  
-    handleCollisions() {
-        const partitions = Collider.partition(500)
-        let collisions = Collision.fromPartitions(partitions)
-        collisions = Collision.broadPhase(collisions)
-        const manifolds = Collision.narrowPhase(collisions)
-        manifolds.map(({obj1,obj2,normal}) => {
-            obj1.onCollision(obj2, normal)
-            obj1.collisionList.push({collider: obj2, normal: normal})
-            obj2.onCollision(obj1, normal.scale(-1))
-            obj2.collisionList.push({collider: obj1, normal: normal.scale(-1)})
-        })
-        Collision.resolve(manifolds)
-    },
 
     // Utility class storing info for each collision
     Manifold: class {
