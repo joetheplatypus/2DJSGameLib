@@ -1,4 +1,4 @@
-import { Component, AABox, Vector, Entity, util } from "../Engine/main.js";
+import { Component, AABox, Vector, Entity, util, Collision } from "../Engine/main.js";
 
 export class Collider extends Component {
     constructor(go, type) {
