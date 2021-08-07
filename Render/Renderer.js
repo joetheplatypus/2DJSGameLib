@@ -93,10 +93,10 @@ export class Renderer {
     // Clear the canvas using background image or black.
     clear() {
         if(this.backgroundImg) {
-            this.ctx.drawImage(this.backgroundImg, 0, 0, this.camera.w, this.camera.h);
+            this.ctx.drawImage(this.backgroundImg, 0, 0, this.camera.dimensions.x, this.camera.dimensions.y)
         } else {
             this.ctx.fillStyle = 'black'
-            this.ctx.fillRect(0, 0, this.camera.w, this.camera.h)
+            this.ctx.fillRect(0, 0, this.camera.dimensions.x, this.camera.dimensions.y)
         }
         
     }
