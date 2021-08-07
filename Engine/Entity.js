@@ -38,5 +38,34 @@ export class Entity {
             return e.components.find(c => c instanceof component)
         }).filter(i => i !== null)
     }
+    static partition(size, hasComponent = null) {
+        let list = Entity.list
+        if(hasComponent) {
+            list = Entity.allWith(hasComponent)
+        }
+        // Need to shift for 0-indexing to account for negative positions
+        const shiftX = -Math.min(...GameObject.list.map(g => g.getAABoundingBox().tl.x),0) + size;
+        const shiftY = -Math.min(...GameObject.list.map(g => g.getAABoundingBox().tl.y),0) + size;
+        // Put into a 2D array
+        const partitions = new util.Expanding2DArray([]);
+        list.map(collider => {
+            const aabox = collider.getAABoundingBox()
+            const top = Math.floor((aabox.tl.y + shiftY) / size);
+            const bottom = Math.floor((aabox.br.y + shiftY) / size);
+            const left = Math.floor((aabox.tl.x + shiftX) / size);
+            const right = Math.floor((aabox.br.x + shiftX) / size);
+            for(let i=left; i<=right; i++) {
+                for(let j=top; j<=bottom; j++) {
+                    const arr = partitions.get(i,j)
+                    if(arr.length === 0) {
+                        partitions.set(i,j,[collider])
+                    } else {
+                        arr.push(collider)
+                    }
+                }
+            }
+        })
+        return partitions.toArray()
+    }
 }
 Entity.list = []
