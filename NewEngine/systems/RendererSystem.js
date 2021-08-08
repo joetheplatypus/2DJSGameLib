@@ -9,11 +9,12 @@ export class RendererSystem extends System {
         this.renderer = renderer
     }
     update(entities) {
+        this.renderer.clear()
         entities.map(ent => {
             const sprite = ent.getComponent(SpriteRenderer).sprite
             const transform = ent.getComponent(Transform)
-            console.log(transform.position.x, transform.position.y)
             this.renderer.draw(sprite, transform.position.x, transform.position.y)
         })
+        this.renderer.render()
     }
 }
