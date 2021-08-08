@@ -72,7 +72,7 @@ export class CollisionSystem extends System {
             const box1 = ent1.getComponent(Collider).getAABox();
             const box2 = ent2.getComponent(Collider).getAABox();
             if(box1.intersects(box2)) {
-                return [obj1,obj2]
+                return [ent1,ent2]
             } else {
                 return null
             }
