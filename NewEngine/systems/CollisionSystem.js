@@ -272,8 +272,10 @@ CollisionSystem.Manifold = class {
     
     static genBoxBox(col1, col2, poly1 = col1.getPoly(), poly2 = col2.getPoly()) {
         const relPosSign = new Vector();
-        relPosSign.x = Math.sign(col2.position.x - col1.position.x) || 1;
-        relPosSign.y = Math.sign(col2.position.y - col1.position.y) || 1;
+        const transform1 = col1.go.getComponent(Transform)
+        const transform2 = col2.go.getComponent(Transform)
+        relPosSign.x = Math.sign(transform2.position.x - transform1.position.x) || 1;
+        relPosSign.y = Math.sign(transform2.position.y - transform1.position.y) || 1;
     
         // get all axis for SAT (normals to all sides)
         let normals = poly1.normals();
