@@ -96,7 +96,7 @@ export class Renderer {
             this.ctx.drawImage(this.backgroundImg, 0, 0, this.camera.w, this.camera.h);
         } else {
             this.ctx.fillStyle = 'black'
-            this.ctx.fillRect(0, 0, this.camera.w, this.camera.h)
+            this.ctx.fillRect(0, 0, this.camera.dimensions.x, this.camera.dimensions.y)
         }
         
     }
