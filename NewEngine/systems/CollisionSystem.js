@@ -174,7 +174,7 @@ export class CollisionSystem extends System {
             // }
 
             // Positional correction
-            const correction = Math.max(penDepth - penDepthSlop, 0) / 2 * penDepthPercent;
+            const correction = Math.max(penDepth - this.penDepthSlop, 0) / 2 * this.penDepthPercent;
             const correctionVector = normal.scale(correction);
             if(phys1) {
                 transform1.position.x -= correctionVector.x;
