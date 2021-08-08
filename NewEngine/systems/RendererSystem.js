@@ -13,7 +13,7 @@ export class RendererSystem extends System {
         entities.map(ent => {
             const sprite = ent.getComponent(SpriteRenderer).sprite
             const transform = ent.getComponent(Transform)
-            this.renderer.draw(sprite, transform.position.x, transform.position.y)
+            this.renderer.draw(sprite, transform.position.x, transform.position.y, transform.rotation)
         })
         this.renderer.render()
     }
