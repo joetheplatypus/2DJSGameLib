@@ -131,8 +131,8 @@ export class CollisionSystem extends System {
 
             const vel1 = new Vector()
             const vel2 = new Vector()
-            const mass1 = 1
-            const mass2 = 1
+            let mass1 = 1
+            let mass2 = 1
             
             if(phys1) {
                 vel1.set(phys1.velocity.x, phys1.velocity.y)
