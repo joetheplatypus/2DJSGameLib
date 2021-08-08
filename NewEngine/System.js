@@ -11,7 +11,6 @@ export class System {
     static updateAll() {
         System.list.map(system => {
             const entities = Entity.allWith(system.req)
-            console.log(entities)
             system.update(entities)
         })
     }
