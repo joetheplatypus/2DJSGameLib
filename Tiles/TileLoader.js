@@ -7,18 +7,15 @@ export const TileLoader = {
         const layers = parseTiledFormat(map);
         const tilesheets = parseTiledSheets(map);
 
-        // Concat sprite/class maps for all tilesheets needed 
+        // Concat sprite maps for all tilesheets needed 
         let spriteMap = [];
+        let startGIDs = [];
         tilesheets.map(([sheet,start]) => {
             spriteMap = spriteMap.concat(sheet.generateSpriteMapping(start));
+            startGIDs.push(start)
         })
+        startGIDsSorted = startGIDs.sort()
         spriteMap = new Map(spriteMap);
-
-        let classMap = [];
-        tilesheets.map(([sheet,start]) => {
-            classMap = classMap.concat(sheet.generateClassMapping(start));
-        })
-        classMap = new Map(classMap);
 
         // Only load specified layer onto grid
         const tiles = layers.find(l => l.name === layerName).data;
@@ -28,9 +25,13 @@ export const TileLoader = {
                 if(tiles[y][x] === 0) {
                     continue;
                 }
-                const sprite = spriteMap.get(tiles[y][x])
-                const classs = classMap.get(tiles[y][x])
-                grid.setTile(x,y,sprite,classs)
+                // can be refactored with map concat if doing this...
+                const gid = tiles[y][x]
+                const sprite = spriteMap.get(gid)
+                const startGID = Math.max(...startGIDsSorted.filter(s => s < gid))
+                const tilesheet = tileseets[startGIDs.indexOf(startGID)]
+                const entity = tiles.creation(sprite)
+                grid.setTile(x,y,entity)
             }
         }
     }

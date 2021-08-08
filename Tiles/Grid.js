@@ -1,4 +1,5 @@
 import { GameObject, util } from "../Engine/main.js";
+import { Components } from "../NewEngine/main.js";
 import { Tile } from "./Tile.js";
 
 export class Grid extends GameObject {
@@ -13,10 +14,17 @@ export class Grid extends GameObject {
         return this.cells.get(i,j);
     }
 
-    // Spawns Tile or custom class and adds to grid
-    setTile(i, j, sprite, classs = Tile) {
+    // Adds entity to grid
+    setTile(i, j, entity) {
         const worldPos = this.cellToWorld({ x:i, y:j });
-        this.cells.set(i,j,new classs(worldPos.x, worldPos.y, this.cellSize, this.cellSize,  sprite))
+        const transform = entity.getComponent(Components.Transform)
+        if(!transform) {
+            console.warn('Cannot add entity without transform to grid')
+        } else {
+            transform.position.set(worldPos.x, worldPos.y)
+            this.cells.set(i,j)
+        }
+        
     }
 
     // Helpers to convert between cell indexes and world position
