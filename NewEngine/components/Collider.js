@@ -5,10 +5,10 @@ import { AABox } from "../util/AABox.js";
 import { Transform } from "./Transform.js";
 
 export class Collider extends Component {
-    constructor(go) {
+    constructor(go, x, y) {
         super(go)
         this.require = [Transform]
-        this.dimensions = new Vector()
+        this.dimensions = new Vector(x,y)
         this.colliderType = Collider.Type.Box
         this.triggerOnly = false
         this.offset = new Vector()
