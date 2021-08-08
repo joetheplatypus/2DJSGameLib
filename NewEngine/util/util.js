@@ -79,8 +79,8 @@ export const util =  {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             if(camera) {
-                camera.w = canvas.width;
-                camera.h = canvas.height;
+                camera.dimensions.x = canvas.width;
+                camera.dimensions.y = canvas.height;
             }   
         }
         window.onresize = () => f();
