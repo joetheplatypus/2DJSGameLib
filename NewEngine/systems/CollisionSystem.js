@@ -10,6 +10,8 @@ export class CollisionSystem extends System {
         super()
         this.req = [Collider]
         this.partitionSize = 500
+        this.penDepthSlop = 0.01
+        this.penDepthPercent = 2
     }
     update(entities) {
         const partitions = this.partition(entities)
