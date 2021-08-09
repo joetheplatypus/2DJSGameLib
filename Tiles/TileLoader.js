@@ -29,7 +29,7 @@ export const TileLoader = {
                 const gid = tiles[y][x]
                 const sprite = spriteMap.get(gid)
                 const startGID = Math.max(...startGIDsSorted.filter(s => s < gid))
-                const tilesheet = tilesheets[startGIDs.indexOf(startGID)]
+                const [tilesheet,gid] = tilesheets[startGIDs.indexOf(startGID)]
                 const entity = tilesheet.creation(sprite)
                 grid.setTile(x,y,entity)
             }
