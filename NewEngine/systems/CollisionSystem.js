@@ -18,7 +18,8 @@ export class CollisionSystem extends System {
         let collisions = this.collisions(partitions)
         collisions = this.broadPhase(collisions)
         const manifolds = this.narrowPhase(collisions)
-        manifolds.map(({obj1,obj2,normal}) => {
+        manifolds.map(({col1,col2,normal}) => {
+            console.log(col1, col2)
             // obj1.onCollision(obj2, normal)
             // obj1.collisionList.push({collider: obj2, normal: normal})
             // obj2.onCollision(obj1, normal.scale(-1))
