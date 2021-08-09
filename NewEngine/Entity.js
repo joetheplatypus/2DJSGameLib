@@ -11,6 +11,7 @@ export class Entity {
             }
         }
         this.components.push(c)
+        return c
     }
     getComponent(comp) {
         return this.components.find(c => c instanceof comp)
