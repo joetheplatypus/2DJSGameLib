@@ -14,7 +14,7 @@ export const ObjectLoader = {
             const entity = new Entity()
             const transform = entity.addComponent(Components.Transform)
             properties.map(({name, value}) => {
-                component = ComponentFactory.get(name)
+                const component = ComponentFactory.get(name)
                 if(component) {
                     const args = JSON.parse(value)
                     entity.addComponent(component, ...args)
