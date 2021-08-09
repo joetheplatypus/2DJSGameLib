@@ -31,7 +31,7 @@ export const TileLoader = {
                 const startGID = Math.max(...startGIDsSorted.filter(s => s < gid))
                 const [tilesheet,fgid] = tilesheets[startGIDs.indexOf(startGID)]
                 const entity = tilesheet.creation(sprite)
-                // grid.setTile(x,y,entity)
+                grid.setTile(x,y,entity)
             }
         }
     }
