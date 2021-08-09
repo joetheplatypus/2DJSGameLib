@@ -15,20 +15,17 @@ export class CollisionSystem extends System {
     }
     update(entities) {
         const partitions = this.partition(entities)
-        // console.log(partitions)
         let collisions = this.collisions(partitions)
-        console.log(collisions.length)
         collisions = this.broadPhase(collisions)
-        //console.log(collisions.length)
-        //const manifolds = this.narrowPhase(collisions)
-        //manifolds.map(({col1,col2,normal}) => {
+        const manifolds = this.narrowPhase(collisions)
+        manifolds.map(({col1,col2,normal}) => {
             // console.log(col1, col2)
             // obj1.onCollision(obj2, normal)
             // obj1.collisionList.push({collider: obj2, normal: normal})
             // obj2.onCollision(obj1, normal.scale(-1))
             // obj2.collisionList.push({collider: obj1, normal: normal.scale(-1)})
-        //})
-        //this.resolve(manifolds)
+        })
+        this.resolve(manifolds)
     }
     partition(entities) {
         // Need to shift for 0-indexing to account for negative positions
