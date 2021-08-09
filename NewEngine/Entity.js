@@ -7,6 +7,7 @@ export class Entity {
         const c = new comp(this, ...args)
         for(let i = 0; i < c.require.length; i++) {
             if(this.getComponent(c.require[i]) == null) {
+                console.warn('Component missing requirements')
                 return false
             }
         }
