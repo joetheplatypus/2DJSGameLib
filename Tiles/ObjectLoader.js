@@ -1,4 +1,4 @@
-import { Components, Entity, ComponentFactory } from "../NewEngine/main";
+import { Components, Entity, ComponentFactory } from "../NewEngine/main.js";
 
 export const ObjectLoader = {
 
