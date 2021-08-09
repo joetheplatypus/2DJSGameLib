@@ -17,7 +17,7 @@ export class CollisionSystem extends System {
         const partitions = this.partition(entities)
         let collisions = this.collisions(partitions)
         collisions = this.broadPhase(collisions)
-        console.log(collisions)
+        console.log(collisions.length)
         const manifolds = this.narrowPhase(collisions)
         manifolds.map(({col1,col2,normal}) => {
             // console.log(col1, col2)
