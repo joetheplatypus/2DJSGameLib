@@ -16,7 +16,8 @@ export const ObjectLoader = {
             properties.map(({name, value}) => {
                 component = ComponentFactory.get(name)
                 if(component) {
-                    entity.addComponent(component, ...value)
+                    const args = JSON.parse(value)
+                    entity.addComponent(component, ...args)
                 }
             })
 
