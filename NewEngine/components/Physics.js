@@ -1,6 +1,7 @@
 import { Component } from "../Component.js";
 import { Vector } from "../util/Vector.js";
 import { Transform } from "./Transform.js";
+import { ComponentFactory } from "../ComponentFactory.js";
 
 export class Physics extends Component {
     constructor(go) {
@@ -14,3 +15,4 @@ export class Physics extends Component {
         this.mass = 1
     }
 }
+ComponentFactory.register('Physics', Physics)

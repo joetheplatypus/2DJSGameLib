@@ -3,6 +3,7 @@ import { Vector } from "../util/Vector.js";
 import { Polygon } from "../util/Polygon.js";
 import { AABox } from "../util/AABox.js";
 import { Transform } from "./Transform.js";
+import { ComponentFactory } from "../ComponentFactory.js";
 
 export class Collider extends Component {
     constructor(go, x, y) {
@@ -36,6 +37,7 @@ export class Collider extends Component {
         return AABox.fromPoly(this.getPoly())
     }
 }
+ComponentFactory.register('Collider', Collider)
 
 Collider.Type = {
     // Axis-Aligned Bounding Box

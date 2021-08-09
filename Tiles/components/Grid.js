@@ -1,5 +1,4 @@
-import { Component, Components, util } from "../../NewEngine/main.js";
-
+import { Component, Components, util, ComponentFactory } from "../../NewEngine/main.js";
 
 export class Grid extends Component {
     constructor(go) {
@@ -53,6 +52,5 @@ export class Grid extends Component {
             transform.position.set(p.x, p.y)
         }
     }
-
-
 }
+ComponentFactory.register('Grid', Grid)

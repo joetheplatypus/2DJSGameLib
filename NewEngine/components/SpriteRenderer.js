@@ -1,5 +1,6 @@
 import { Component } from "../Component.js";
 import { Transform } from "./Transform.js";
+import { ComponentFactory } from "../ComponentFactory.js";
 
 export class SpriteRenderer extends Component {
     constructor(go, sprite) {
@@ -8,3 +9,4 @@ export class SpriteRenderer extends Component {
         this.sprite = sprite
     }
 }
+ComponentFactory.register('SpriteRenderer', SpriteRenderer)

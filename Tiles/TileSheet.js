@@ -1,5 +1,3 @@
-import { Tile } from "./Tile.js";
-
 // Stores both a class and sprite for each item in the tilesheet.
 export class TileSheet {
     constructor(name) {
