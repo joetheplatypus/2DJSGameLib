@@ -4,6 +4,7 @@ import { Component, Components, util } from "../../NewEngine/main.js";
 export class Grid extends Component {
     constructor(go) {
         super(go);
+        this.require = [ Components.Transform ]
         this.cells = new util.Expanding2DArray(null);
         this.cellSize = 128;
     }
