@@ -9,7 +9,7 @@ export const ObjectLoader = {
         // filter out those without tag
         // objs = objs.filter(o => (o.properties && o.properties.find(p => p.name === 'class')));
         // load obj from tag
-        objs.map(({properties, x, y}) => {
+        const entities = objs.map(({properties, x, y}) => {
 
             const entity = new Entity()
             const transform = entity.addComponent(Components.Transform)
@@ -22,7 +22,10 @@ export const ObjectLoader = {
             })
 
             transform.position.set(x, y - map.tileheight);
+            return entity
         })
+
+        return entities
     }
 
 }
