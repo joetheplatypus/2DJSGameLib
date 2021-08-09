@@ -14,7 +14,7 @@ export const TileLoader = {
             spriteMap = spriteMap.concat(sheet.generateSpriteMapping(start));
             startGIDs.push(start)
         })
-        startGIDsSorted = startGIDs.sort()
+        const startGIDsSorted = startGIDs.sort()
         spriteMap = new Map(spriteMap);
 
         // Only load specified layer onto grid
