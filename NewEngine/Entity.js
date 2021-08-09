@@ -1,5 +1,6 @@
 export class Entity {
     constructor() {
+        this.id = Math.random()
         this.components = []
         Entity.list.push(this)
     }
