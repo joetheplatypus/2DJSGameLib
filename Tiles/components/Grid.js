@@ -21,7 +21,7 @@ export class Grid extends Component {
             console.warn('Cannot add entity without transform to grid')
         } else {
             transform.position.set(worldPos.x, worldPos.y)
-            this.cells.set(i,j)
+            this.cells.set(i,j,entity)
         }
         
     }
