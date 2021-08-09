@@ -1,4 +1,3 @@
-export * from './Tile.js'
 export * from './TileLoader.js'
 export * from './TileSheet.js'
 export * from './ObjectLoader.js'
