@@ -1,11 +1,9 @@
-import { GameObject, util } from "../Engine/main.js";
-import { Components } from "../NewEngine/main.js";
-import { Tile } from "./Tile.js";
+import { Component, Components } from "../../NewEngine/main.js";
 
-export class Grid extends GameObject {
-    constructor() {
-        super();
-        this.bypassCollisions = true;
+
+export class Grid extends Component {
+    constructor(go) {
+        super(go);
         this.cells = new util.Expanding2DArray(null);
         this.cellSize = 128;
     }
@@ -29,9 +27,10 @@ export class Grid extends GameObject {
 
     // Helpers to convert between cell indexes and world position
     cellToWorld({x,y}) {
+        const transform = this.go.getComponent(Components.Transform)
         return {
-            x: this.position.x + x*this.cellSize,
-            y: this.position.y + y*this.cellSize,
+            x: transform.position.x + x*this.cellSize,
+            y: transform.position.y + y*this.cellSize,
         }
     }
     worldToCell({x,y}) {
@@ -41,17 +40,16 @@ export class Grid extends GameObject {
         }
     }
 
-    // Snaps a GameObject to the centre of a grid cell.  Either nearest or specified by cell {x,y}
-    snap(obj, cell = null) {
+    // Snaps an entity to the centre of a grid cell.  Either nearest or specified by cell {x,y}
+    snap(ent, cell = null) {
+        const transform = ent.getComponent(Components.Transform)
         if(cell != null) {
             const p = this.cellToWorld(cell);
-            obj.position.x = p.x;
-            obj.position.y = p.y; 
+            transform.position.set(p.x, p.y)
         } else {
-            const c = this.worldToCell(obj.position);
+            const c = this.worldToCell(transform.position);
             const p = this.cellToWorld(c);
-            obj.position.x = p.x;
-            obj.position.y = p.y; 
+            transform.position.set(p.x, p.y)
         }
     }
 
