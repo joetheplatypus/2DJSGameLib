@@ -32,5 +32,8 @@ export class Entity {
             return true
         })
     }
+    static fromID(id) {
+        return Entity.list.find(e => e.id === id)
+    }
 }
 Entity.list = []
