@@ -1,6 +1,10 @@
 export class Entity {
-    constructor() {
-        this.id = Math.random()
+    constructor(id) {
+        if(id) {
+            this.id = id
+        } else {
+            this.id = Math.random()
+        }
         this.components = []
         Entity.list.push(this)
     }
